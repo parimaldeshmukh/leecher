@@ -23,6 +23,7 @@ namespace Leecher
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.graphics.IsFullScreen = true;
         }
 
         /// <summary>
