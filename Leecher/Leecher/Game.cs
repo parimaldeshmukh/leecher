@@ -18,12 +18,14 @@ namespace Leecher
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Texture2D background, brick, exitSign;
+        int screenHeight, screenWidth;
 
         public Game()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.graphics.IsFullScreen = true;
+            this.graphics.IsFullScreen = true;          
         }
 
         /// <summary>
@@ -48,7 +50,12 @@ namespace Leecher
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            screenHeight = graphics.GraphicsDevice.Viewport.Height;
+            screenWidth = graphics.GraphicsDevice.Viewport.Width;
+            background = Content.Load<Texture2D>(@"background");
+            brick = Content.Load<Texture2D>(@"brick");
+            exitSign = Content.Load<Texture2D>(@"exit");
+
         }
 
         /// <summary>
@@ -68,7 +75,7 @@ namespace Leecher
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
 
             // TODO: Add your update logic here
@@ -84,8 +91,20 @@ namespace Leecher
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
 
+            Rectangle backgroundContainer = new Rectangle(0, 0, screenWidth, screenHeight);
+            spriteBatch.Begin();
+            
+            spriteBatch.Draw(background, backgroundContainer, Color.White);
+
+            for (int brickIndex = 0; brickIndex < screenWidth; brickIndex += 40)
+            {
+                spriteBatch.Draw(brick, new Rectangle(brickIndex, screenHeight - 20, 40, 20), Color.White);
+            }
+
+            spriteBatch.Draw(exitSign, new Rectangle(screenWidth - 90, screenHeight - 80, 50, 60), Color.White);
+
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
