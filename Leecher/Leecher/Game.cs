@@ -18,7 +18,7 @@ namespace Leecher
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D background, brick, exitSign;
+        Texture2D background, brick, exitSign, tree, bird;
         int screenHeight, screenWidth;
 
         public Game()
@@ -55,7 +55,8 @@ namespace Leecher
             background = Content.Load<Texture2D>(@"background");
             brick = Content.Load<Texture2D>(@"brick");
             exitSign = Content.Load<Texture2D>(@"exit");
-
+            tree = Content.Load<Texture2D>(@"tree");
+            bird = Content.Load<Texture2D>(@"bird");
         }
 
         /// <summary>
@@ -103,6 +104,8 @@ namespace Leecher
             }
 
             spriteBatch.Draw(exitSign, new Rectangle(screenWidth - 90, screenHeight - 80, 50, 60), Color.White);
+            spriteBatch.Draw(tree, new Rectangle(screenWidth - 370, screenHeight - 400, 240, 380), Color.White);
+            spriteBatch.Draw(bird, new Rectangle(screenWidth - 170, screenHeight - 440, 40, 40), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);
