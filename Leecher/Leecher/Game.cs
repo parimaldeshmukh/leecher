@@ -18,14 +18,16 @@ namespace Leecher
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D background, brick, exitSign, tree, bird, ladder;
+        Texture2D background, brick, exitSign, tree, bird, ladder, character;
         int screenHeight, screenWidth;
+        int charX, charY;
 
         public Game()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.graphics.IsFullScreen = true;          
+            this.graphics.IsFullScreen = true;
+            
         }
 
         /// <summary>
@@ -52,12 +54,17 @@ namespace Leecher
 
             screenHeight = graphics.GraphicsDevice.Viewport.Height;
             screenWidth = graphics.GraphicsDevice.Viewport.Width;
+
+            charX = 10;
+            charY = screenHeight - 130;
+
             background = Content.Load<Texture2D>(@"background");
             brick = Content.Load<Texture2D>(@"brick");
             exitSign = Content.Load<Texture2D>(@"exit");
             tree = Content.Load<Texture2D>(@"tree");
             bird = Content.Load<Texture2D>(@"bird");
             ladder = Content.Load<Texture2D>(@"ladder");
+            character = Content.Load<Texture2D>(@"test_subject_no_2");
         }
 
         /// <summary>
@@ -81,6 +88,14 @@ namespace Leecher
                 this.Exit();
 
             // TODO: Add your update logic here
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                charX += 5;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                charX -= 5;
+            }
 
             base.Update(gameTime);
         }
@@ -98,47 +113,36 @@ namespace Leecher
             spriteBatch.Begin();
             
             spriteBatch.Draw(background, backgroundContainer, Color.White);
+            DrawStatics();
 
-            for (int brickIndex = 0; brickIndex < screenWidth; brickIndex += 40)
-            {
-                spriteBatch.Draw(brick, new Rectangle(brickIndex, screenHeight - 20, 40, 20), Color.White);
-            }
-
-
-            //legde 1
-            spriteBatch.Draw(brick, new Rectangle(280+150, screenHeight - 150, 40, 20), Color.White);
-            spriteBatch.Draw(brick, new Rectangle(280+110, screenHeight - 150, 40, 20), Color.White);
-            spriteBatch.Draw(brick, new Rectangle(280+70, screenHeight - 150, 40, 20), Color.White);
-
-
-            //ledge 2
-            spriteBatch.Draw(brick, new Rectangle(screenWidth / 2+80, screenHeight - 250, 40, 20), Color.White);
-            spriteBatch.Draw(brick, new Rectangle(screenWidth / 2+40, screenHeight - 250, 40, 20), Color.White);
-            spriteBatch.Draw(brick, new Rectangle(screenWidth / 2, screenHeight - 250, 40, 20), Color.White);
-
-            
-            //ledge 3
-            spriteBatch.Draw(brick, new Rectangle(screenWidth / 2, screenHeight - 400, 40, 20), Color.White);
-            spriteBatch.Draw(brick, new Rectangle(screenWidth / 2+40, screenHeight - 400, 40, 20), Color.White);
-            spriteBatch.Draw(brick, new Rectangle(screenWidth / 2+80, screenHeight - 400, 40, 20), Color.White);
-            spriteBatch.Draw(brick, new Rectangle(screenWidth / 2 -40, screenHeight - 400, 40, 20), Color.White);
-            spriteBatch.Draw(brick, new Rectangle(screenWidth / 2 -80, screenHeight - 400, 40, 20), Color.White);
-            
-
-            //ledge 4
-            spriteBatch.Draw(brick, new Rectangle(screenWidth / 2 -40, screenHeight - 600, 40, 20), Color.White);
-            spriteBatch.Draw(brick, new Rectangle(screenWidth / 2 - 80, screenHeight - 600, 40, 20), Color.White);
-            spriteBatch.Draw(brick, new Rectangle(screenWidth / 2 - 120, screenHeight - 600, 40, 20), Color.White);
-
-
-            spriteBatch.Draw(ladder, new Rectangle(screenWidth / 2 , screenHeight - 600, 40, 200), Color.White);
-            spriteBatch.Draw(exitSign, new Rectangle(screenWidth - 90, screenHeight - 80, 50, 60), Color.White);
-            spriteBatch.Draw(tree, new Rectangle(screenWidth - 370, screenHeight - 400, 240, 380), Color.White);
-            spriteBatch.Draw(bird, new Rectangle(screenWidth - 170, screenHeight - 440, 40, 40), Color.White);
-
+            spriteBatch.Draw(character, new Rectangle(charX, charY, 70, 110), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        private void DrawStatics()
+        {
+            spriteBatch.Draw(ladder, new Rectangle(screenWidth / 2, screenHeight - 600, 40, 200), Color.White);
+            spriteBatch.Draw(exitSign, new Rectangle(screenWidth - 90, screenHeight - 80, 50, 60), Color.White);
+            spriteBatch.Draw(tree, new Rectangle(screenWidth - 370, screenHeight - 400, 240, 380), Color.White);
+            spriteBatch.Draw(bird, new Rectangle(screenWidth - 170, screenHeight - 440, 40, 40), Color.White);
+            
+
+            DrawLedge(0, screenWidth, screenHeight - 20);
+            DrawLedge(280 + 70, 280 + 150, screenHeight - 150);
+            DrawLedge(screenWidth / 2, screenWidth / 2 + 80, screenHeight - 250);
+            DrawLedge(screenWidth / 2 - 80, screenWidth / 2 + 80, screenHeight - 400);
+            DrawLedge(screenWidth / 2 - 120, screenWidth / 2 - 40, screenHeight - 600);
+
+        }
+
+        private void DrawLedge(int from, int to, int atHeight)
+        {
+            for (int index = from; index <= to; index += 40)
+            {
+                spriteBatch.Draw(brick, new Rectangle(index, atHeight, 40, 20), Color.White);
+            }
         }
     }
 }
