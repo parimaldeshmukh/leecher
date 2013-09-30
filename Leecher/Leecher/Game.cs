@@ -125,6 +125,11 @@ namespace Leecher
             spriteBatch.Draw(brick, new Rectangle(screenWidth / 2 -80, screenHeight - 400, 40, 20), Color.White);
             
 
+            //ledge 4
+            spriteBatch.Draw(brick, new Rectangle(screenWidth / 2 -40, screenHeight - 600, 40, 20), Color.White);
+            spriteBatch.Draw(brick, new Rectangle(screenWidth / 2 - 80, screenHeight - 600, 40, 20), Color.White);
+            spriteBatch.Draw(brick, new Rectangle(screenWidth / 2 - 120, screenHeight - 600, 40, 20), Color.White);
+
 
             spriteBatch.Draw(ladder, new Rectangle(screenWidth / 2 , screenHeight - 600, 40, 200), Color.White);
             spriteBatch.Draw(exitSign, new Rectangle(screenWidth - 90, screenHeight - 80, 50, 60), Color.White);
