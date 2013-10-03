@@ -7,11 +7,12 @@ using Microsoft.Xna.Framework;
 
 namespace Leecher
 {
-    class Ledge
+    class Ledge : GameObject
     {
         List<StaticObject> bricks = new List<StaticObject>();
         int from, to, atHeight;
         Texture2D texture;
+        Rectangle collisionBox;
 
         public Ledge(Texture2D tex, int ledgeFrom, int ledgeTo, int ledgeAtHeight)
         {
@@ -19,8 +20,9 @@ namespace Leecher
             from = ledgeFrom;
             to = ledgeTo;
             atHeight = ledgeAtHeight;
-        }
 
+            collisionBox = new Rectangle(from, atHeight, to - from, 20);
+        }
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -30,6 +32,10 @@ namespace Leecher
             }
         }
 
+        public bool CollidesWith(GameObject other)
+        {
+            return false;
+        }
 
     }
 }
