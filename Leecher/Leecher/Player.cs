@@ -13,9 +13,8 @@ namespace Leecher
         public int x, y, width, height;
         bool isJumping;
         TimeSpan timeSinceJumpStart;
-        int jumpTickCount=999;
         int jumpDeltaY = 2;
-        
+        Rectangle box;
         Texture2D texture;
 
         public Player(Texture2D tex, int xPos, int yPos)
@@ -26,6 +25,12 @@ namespace Leecher
             isJumping = false;
             width = 70;
             height = 110;
+            box = new Rectangle(x, y, width, height);
+        }
+
+        public Rectangle getCollisionBox()
+        {
+            return box;
         }
 
         public bool IsJumping {
@@ -38,52 +43,50 @@ namespace Leecher
             spriteBatch.Draw(texture, new Rectangle(x, y, width, height), Color.White);
         }
 
-        public bool CollidesWith(GameObject other)
-        { return false; }
-
-
-        public void Update(KeyboardState state, GameTime gameTime)
+        public void Update(KeyboardState state, GameTime gameTime, List<GameObject> gameObjects)
         { 
-            if (state.IsKeyDown(Keys.Up) || isJumping)
+            if (isJumping)
             {
-                if (isJumping)
+                timeSinceJumpStart += gameTime.ElapsedGameTime;
+
+                if (timeSinceJumpStart.TotalSeconds < 1.2)
                 {
-                    timeSinceJumpStart += gameTime.ElapsedGameTime;
+                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y - jumpDeltaY, width, height), gameObjects)) y -= jumpDeltaY;
+                    else timeSinceJumpStart += new TimeSpan(1,1,1,1,1);             // dirty, adding a day to time since jump start so that he starts dropping
+                }
 
-                    if (timeSinceJumpStart.TotalSeconds < 1.2)
-                    {
-                        y -= jumpDeltaY;
-                        jumpTickCount++;
-                    }
-
-                    else if (jumpTickCount > 1)
-                    {
-                        y += jumpDeltaY;
-                        jumpTickCount--;
-                    }
-
+                else
+                {
+                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDeltaY, width, height), gameObjects)) y += jumpDeltaY;
                     else
                     {
                         isJumping = false;
                     }
                 }
 
-                else
-                {
-                    isJumping = true;
-                    timeSinceJumpStart = TimeSpan.Zero;
-                    y += jumpDeltaY;
-                    jumpTickCount = 0;
-                }
+               
             }
 
+            else if(state.IsKeyDown(Keys.Up))
+            {
+                isJumping = true;
+                timeSinceJumpStart = TimeSpan.Zero;
+                if (!PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDeltaY, width, height), gameObjects))  y += jumpDeltaY;
+            }
+
+            if (!IsJumping && !PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDeltaY, width, height), gameObjects)) y += jumpDeltaY;
+            UpdateHorizontalMovement(state, gameObjects);
+        }
+
+        private void UpdateHorizontalMovement(KeyboardState state, List<GameObject> gameObjects)
+        {
             if (state.IsKeyDown(Keys.Right))
             {
-                x += jumpDeltaY;
+                if (!PhysicsEngine.IsColliding(new Rectangle(x + jumpDeltaY, y, width, height), gameObjects)) x += jumpDeltaY;
             }
             else if (state.IsKeyDown(Keys.Left))
             {
-                x -= jumpDeltaY;
+                if (!PhysicsEngine.IsColliding(new Rectangle(x - jumpDeltaY, y, width, height), gameObjects)) x -= jumpDeltaY;
             }
         }
     

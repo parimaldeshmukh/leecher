@@ -12,7 +12,12 @@ namespace Leecher
         List<StaticObject> bricks = new List<StaticObject>();
         int from, to, atHeight;
         Texture2D texture;
-        Rectangle collisionBox;
+        private Rectangle box;
+
+        public Rectangle getCollisionBox()
+        {
+           return box; 
+        }
 
         public Ledge(Texture2D tex, int ledgeFrom, int ledgeTo, int ledgeAtHeight)
         {
@@ -21,7 +26,7 @@ namespace Leecher
             to = ledgeTo;
             atHeight = ledgeAtHeight;
 
-            collisionBox = new Rectangle(from, atHeight, to - from, 20);
+            box = new Rectangle(from, atHeight, to - from, 20);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -31,11 +36,5 @@ namespace Leecher
                 spriteBatch.Draw(texture, new Rectangle(index, atHeight, 40, 20), Color.White);
             }
         }
-
-        public bool CollidesWith(GameObject other)
-        {
-            return false;
-        }
-
     }
 }

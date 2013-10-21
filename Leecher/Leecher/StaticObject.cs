@@ -11,12 +11,11 @@ namespace Leecher
     {
         Texture2D texture;
         int x, y, height, width;
-        Rectangle box, collisionBox;
+        Rectangle box;
 
-        public Rectangle CollisionBox
+        public Rectangle getCollisionBox()
         {
-            get { return collisionBox; }
-            set { collisionBox = value; }
+            return box; 
         }
 
         public StaticObject(Texture2D tex, int posX, int posY, int objectWidth, int objectHeight)
@@ -26,18 +25,12 @@ namespace Leecher
             y = posY;
             width = objectWidth;
             height = objectHeight;
-            box = collisionBox = new Rectangle(x, y, width, height);
+            box = new Rectangle(x, y, width, height);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, box, Color.White);
         }
-
-        public bool CollidesWith(GameObject other)
-        {
-            return false;
-        }
-
     }
 }

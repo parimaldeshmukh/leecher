@@ -9,6 +9,6 @@ namespace Leecher
     interface GameObject
     {
         void Draw(SpriteBatch spriteBatch);
-        bool CollidesWith(GameObject other);
+        Microsoft.Xna.Framework.Rectangle getCollisionBox();
     }
 }

@@ -15,7 +15,7 @@ namespace Leecher
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D background, character, theCreator, openComment, closeComment;
+        Texture2D background, character, theCreator, openComment, closeComment, brick;
         int screenHeight, screenWidth;
         Player player;
         
@@ -47,6 +47,7 @@ namespace Leecher
             theCreator = Content.Load<Texture2D>(@"theCreator");
             openComment = Content.Load<Texture2D>(@"open_comment");
             closeComment = Content.Load<Texture2D>(@"close_comment");
+            brick = Content.Load<Texture2D>(@"brick");
 
             player = new Player(character, 10, screenHeight - 130);
 
@@ -57,7 +58,7 @@ namespace Leecher
             collidableObjects.Add(new StaticObject(Content.Load<Texture2D>(@"bird"), screenWidth - 170, screenHeight - 440, 40, 40));
 
 
-            Texture2D brick = Content.Load<Texture2D>(@"brick");
+           
             collidableObjects.Add(new Ledge(brick, 0, screenWidth, screenHeight - 20));
             collidableObjects.Add(new Ledge(brick, 350, 430, screenHeight - 150));
             collidableObjects.Add(new Ledge(brick, screenWidth / 2, screenWidth / 2 + 80, screenHeight - 250));
@@ -74,7 +75,7 @@ namespace Leecher
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
 
-            player.Update(Keyboard.GetState(), gameTime);
+            player.Update(Keyboard.GetState(), gameTime, collidableObjects);
             base.Update(gameTime);
         }
 
