@@ -9,7 +9,7 @@ namespace Leecher
 {
     class Ledge : GameObject
     {
-        List<StaticObject> bricks = new List<StaticObject>();
+        List<CollidableObject> bricks = new List<CollidableObject>();
         int from, to, atHeight;
         Texture2D texture;
         private Rectangle box;

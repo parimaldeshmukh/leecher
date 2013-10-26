@@ -13,7 +13,7 @@ namespace Leecher
         public int x, y, width, height;
         bool isJumping;
         TimeSpan timeSinceJumpStart;
-        int jumpDeltaY = 2;
+        int deltaMovement = 2;
         Rectangle box;
         Texture2D texture;
 
@@ -51,13 +51,13 @@ namespace Leecher
 
                 if (timeSinceJumpStart.TotalSeconds < 1.2)
                 {
-                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y - jumpDeltaY, width, height), gameObjects)) y -= jumpDeltaY;
+                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y - deltaMovement, width, height), gameObjects)) y -= deltaMovement;
                     else timeSinceJumpStart += new TimeSpan(1,1,1,1,1);             // dirty, adding a day to time since jump start so that he starts dropping
                 }
 
                 else
                 {
-                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDeltaY, width, height), gameObjects)) y += jumpDeltaY;
+                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y + deltaMovement, width, height), gameObjects)) y += deltaMovement;
                     else
                     {
                         isJumping = false;
@@ -71,23 +71,45 @@ namespace Leecher
             {
                 isJumping = true;
                 timeSinceJumpStart = TimeSpan.Zero;
-                if (!PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDeltaY, width, height), gameObjects))  y += jumpDeltaY;
+                if (!PhysicsEngine.IsColliding(new Rectangle(x, y - deltaMovement, width, height), gameObjects)) MoveUp();
             }
 
-            if (!IsJumping && !PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDeltaY, width, height), gameObjects)) y += jumpDeltaY;
+            if (!IsJumping && !PhysicsEngine.IsColliding(new Rectangle(x, y + deltaMovement, width, height), gameObjects)) MoveDown();
             UpdateHorizontalMovement(state, gameObjects);
         }
+
+       
 
         private void UpdateHorizontalMovement(KeyboardState state, List<GameObject> gameObjects)
         {
             if (state.IsKeyDown(Keys.Right))
             {
-                if (!PhysicsEngine.IsColliding(new Rectangle(x + jumpDeltaY, y, width, height), gameObjects)) x += jumpDeltaY;
+                if (!PhysicsEngine.IsColliding(new Rectangle(x + deltaMovement, y, width, height), gameObjects)) MoveRight();
             }
             else if (state.IsKeyDown(Keys.Left))
             {
-                if (!PhysicsEngine.IsColliding(new Rectangle(x - jumpDeltaY, y, width, height), gameObjects)) x -= jumpDeltaY;
+                if (!PhysicsEngine.IsColliding(new Rectangle(x - deltaMovement, y, width, height), gameObjects)) MoveLeft();
             }
+        }
+
+        private void MoveLeft()
+        {
+            x -= deltaMovement;
+        }
+
+        private void MoveRight()
+        {
+            x += deltaMovement;
+        }
+
+        private void MoveDown()
+        {
+            y += deltaMovement;
+        }
+
+        private void MoveUp()
+        {
+            y -= deltaMovement;
         }
     
     }

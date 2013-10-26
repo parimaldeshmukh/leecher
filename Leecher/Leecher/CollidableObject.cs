@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace Leecher
 {
-    class StaticObject : GameObject
+    class CollidableObject : GameObject
     {
         Texture2D texture;
         int x, y, height, width;
@@ -18,7 +18,7 @@ namespace Leecher
             return box; 
         }
 
-        public StaticObject(Texture2D tex, int posX, int posY, int objectWidth, int objectHeight)
+        public CollidableObject(Texture2D tex, int posX, int posY, int objectWidth, int objectHeight)
         {
             texture = tex;
             x = posX;
