@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace Leecher
 {
-    static class PhysicsEngine
+    static class PhysicsEngine  //pass gameObjects as constructor argument while creating level
     {
         public static bool IsColliding(Rectangle thizBox, List<GameObject> objects)
         {
@@ -17,4 +17,9 @@ namespace Leecher
 
         }
     }
+
+    //public static void PhysicsEngine.HandleCollision(Player player, List<GameObject> gameObjects)
+    // for object which is colliging, call object.HandleCollision(player)
+
+
 }

@@ -51,13 +51,15 @@ namespace Leecher
 
                 if (timeSinceJumpStart.TotalSeconds < 1.2)
                 {
-                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y - deltaMovement, width, height), gameObjects)) y -= deltaMovement;
-                    else timeSinceJumpStart += new TimeSpan(1,1,1,1,1);             // dirty, adding a day to time since jump start so that he starts dropping
+                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y - deltaMovement, width, height), gameObjects)) MoveUp();
+                        //PhysicsEngine.HandleCollision(Player, gameObjects)
+                    else timeSinceJumpStart += new TimeSpan(1, 1, 1, 1, 1);             // dirty, adding a day to time since jump start so that he starts dropping
                 }
 
                 else
                 {
-                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y + deltaMovement, width, height), gameObjects)) y += deltaMovement;
+                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y + deltaMovement, width, height), gameObjects)) MoveDown();
+                    //PhysicsEngine.HandleCollision(Player, gameObjects)
                     else
                     {
                         isJumping = false;
@@ -72,9 +74,11 @@ namespace Leecher
                 isJumping = true;
                 timeSinceJumpStart = TimeSpan.Zero;
                 if (!PhysicsEngine.IsColliding(new Rectangle(x, y - deltaMovement, width, height), gameObjects)) MoveUp();
+                //PhysicsEngine.HandleCollision(Player, gameObjects)
             }
 
             if (!IsJumping && !PhysicsEngine.IsColliding(new Rectangle(x, y + deltaMovement, width, height), gameObjects)) MoveDown();
+            //PhysicsEngine.HandleCollision(Player, gameObjects)
             UpdateHorizontalMovement(state, gameObjects);
         }
 
@@ -85,10 +89,12 @@ namespace Leecher
             if (state.IsKeyDown(Keys.Right))
             {
                 if (!PhysicsEngine.IsColliding(new Rectangle(x + deltaMovement, y, width, height), gameObjects)) MoveRight();
+                //PhysicsEngine.HandleCollision(Player, gameObjects)
             }
             else if (state.IsKeyDown(Keys.Left))
             {
                 if (!PhysicsEngine.IsColliding(new Rectangle(x - deltaMovement, y, width, height), gameObjects)) MoveLeft();
+                //PhysicsEngine.HandleCollision(Player, gameObjects)
             }
         }
 

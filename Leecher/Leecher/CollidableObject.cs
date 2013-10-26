@@ -32,5 +32,8 @@ namespace Leecher
         {
             spriteBatch.Draw(texture, box, Color.White);
         }
+
+
+
     }
 }
