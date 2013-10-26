@@ -60,8 +60,8 @@ namespace Leecher
 
            
             collidableObjects.Add(new Ledge(brick, 0, screenWidth, screenHeight - 20));
-            collidableObjects.Add(new Ledge(brick, 350, 430, screenHeight - 150));
-            collidableObjects.Add(new Ledge(brick, screenWidth / 2, screenWidth / 2 + 80, screenHeight - 250));
+            collidableObjects.Add(new Ledge(brick, 320, 480, screenHeight - 150));
+            collidableObjects.Add(new Ledge(brick, screenWidth / 2, screenWidth / 2 + 160, screenHeight - 250));
             collidableObjects.Add(new Ledge(brick, screenWidth / 2 - 80, screenWidth / 2 + 80, screenHeight - 400));
             collidableObjects.Add(new Ledge(brick, screenWidth / 2 - 120, screenWidth / 2 - 40, screenHeight - 600));
         }
@@ -91,6 +91,8 @@ namespace Leecher
             spriteBatch.Draw(theCreator, new Rectangle(30, 10, 120, 120), Color.White);
             spriteBatch.Draw(openComment, new Rectangle(300, 100, 40, 40), Color.White);
             spriteBatch.Draw(closeComment, new Rectangle(screenWidth - 300,screenHeight -70, 40, 40), Color.White);
+
+            
 
             DrawStatics();
             player.Draw(spriteBatch);
