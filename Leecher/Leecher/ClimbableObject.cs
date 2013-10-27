@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace Leecher
 {
-    class CollidableObject : GameObject
+    class ClimbableObject : GameObject
     {
         Texture2D texture;
         int x, y, height, width;
@@ -18,7 +18,7 @@ namespace Leecher
             return box; 
         }
 
-        public CollidableObject(Texture2D tex, int posX, int posY, int objectWidth, int objectHeight)
+        public ClimbableObject(Texture2D tex, int posX, int posY, int objectWidth, int objectHeight)
         {
             texture = tex;
             x = posX;
@@ -36,7 +36,8 @@ namespace Leecher
 
         public bool PlayerCollisionEffect() // return false to allow player to pass through this object, return true for a real collision
         {
-            return true;
+            return false;
         }
     }
-}
+    }
+

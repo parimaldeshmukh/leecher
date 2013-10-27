@@ -36,5 +36,10 @@ namespace Leecher
                 spriteBatch.Draw(texture, new Rectangle(index, atHeight, 40, 20), Color.White);
             }
         }
+
+        public bool PlayerCollisionEffect()
+        {
+            return true;
+        }
     }
 }

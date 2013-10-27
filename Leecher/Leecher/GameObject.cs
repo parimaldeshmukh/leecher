@@ -10,5 +10,6 @@ namespace Leecher
     {
         void Draw(SpriteBatch spriteBatch);
         Microsoft.Xna.Framework.Rectangle getCollisionBox();
+        bool PlayerCollisionEffect();
     }
 }

@@ -54,7 +54,7 @@ namespace Leecher
             collidableObjects.Add(new CollidableObject(Content.Load<Texture2D>(@"exit"), screenWidth - 90, screenHeight - 80, 50, 60));
             collidableObjects.Add(new CollidableObject(Content.Load<Texture2D>(@"tree"), screenWidth - 320, screenHeight - 400, 200, 380));
             collidableObjects.Add(new CollidableObject(Content.Load<Texture2D>(@"branch"), screenWidth - 370, screenHeight - 320, 50, 60));
-            collidableObjects.Add(new CollidableObject(Content.Load<Texture2D>(@"ladder"), screenWidth / 2, screenHeight - 600, 40, 200));
+            collidableObjects.Add(new ClimbableObject(Content.Load<Texture2D>(@"ladder"), screenWidth / 2, screenHeight - 600, 40, 200));
             collidableObjects.Add(new CollidableObject(Content.Load<Texture2D>(@"bird"), screenWidth - 170, screenHeight - 440, 40, 40));
 
 

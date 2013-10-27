@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClimbableObject.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="PhysicsEngine.cs" />
     <Compile Include="Player.cs" />
