@@ -8,20 +8,16 @@ namespace Leecher
 {
     static class PhysicsEngine  //pass gameObjects as constructor argument while creating level
     {
-        public static bool IsColliding(Rectangle thizBox, List<GameObject> objects)
-        {/*
-             return objects.Exists(delegate(GameObject that)
-                 {
-                     return thizBox.Intersects(that.getCollisionBox());
-                 });*/
 
+        public static List<GameObject> objects;
+
+        public static bool IsColliding(Rectangle thizBox)
+        {
             List<GameObject> collidingObjects = objects.FindAll(delegate(GameObject that)
             {
                 return thizBox.Intersects(that.getCollisionBox());
                 
             });
-
-
 
             if (collidingObjects == null)
                 return false;
@@ -33,13 +29,7 @@ namespace Leecher
                 });
 
                 return toReturn;
-                //return collidingObject.PlayerCollisionEffect();
             }
         }
     }
-
-    //public static void PhysicsEngine.HandleCollision(Player player, List<GameObject> gameObjects)
-    // for object which is colliging, call object.HandleCollision(player)
-
-
 }

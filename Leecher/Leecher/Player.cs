@@ -48,13 +48,13 @@ namespace Leecher
 
                 if (timeSinceJumpStart.TotalSeconds < 1.2)
                 {
-                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y - jumpDelta, width, height), gameObjects)) MoveUp();
+                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y - jumpDelta, width, height))) MoveUp();
                     else timeSinceJumpStart += new TimeSpan(1, 1, 1, 1, 1);             // dirty, adding a day to time since jump start so that he starts dropping
                 }
 
                 else
                 {
-                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDelta, width, height), gameObjects)) MoveDown();
+                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDelta, width, height))) MoveDown();
                     else
                     {
                         isJumping = false;
@@ -68,10 +68,10 @@ namespace Leecher
             {
                 isJumping = true;
                 timeSinceJumpStart = TimeSpan.Zero;
-                if (!PhysicsEngine.IsColliding(new Rectangle(x, y - jumpDelta, width, height), gameObjects)) MoveUp();
+                if (!PhysicsEngine.IsColliding(new Rectangle(x, y - jumpDelta, width, height))) MoveUp();
             }
 
-            if (!isJumping && !PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDelta, width, height), gameObjects)) MoveDown();
+            if (!isJumping && !PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDelta, width, height))) MoveDown();
             UpdateHorizontalMovement(state, gameObjects);
         }
 
@@ -81,11 +81,11 @@ namespace Leecher
         {
             if (state.IsKeyDown(Keys.Right))
             {
-                if (!PhysicsEngine.IsColliding(new Rectangle(x + deltaMovement, y, width, height), gameObjects)) MoveRight();
+                if (!PhysicsEngine.IsColliding(new Rectangle(x + deltaMovement, y, width, height))) MoveRight();
             }
             else if (state.IsKeyDown(Keys.Left))
             {
-                if (!PhysicsEngine.IsColliding(new Rectangle(x - deltaMovement, y, width, height), gameObjects)) MoveLeft();
+                if (!PhysicsEngine.IsColliding(new Rectangle(x - deltaMovement, y, width, height))) MoveLeft();
             }
         }
 

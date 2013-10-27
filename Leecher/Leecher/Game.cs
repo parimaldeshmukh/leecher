@@ -64,6 +64,8 @@ namespace Leecher
             collidableObjects.Add(new Ledge(brick, screenWidth / 2, screenWidth / 2 + 160, screenHeight - 250));
             collidableObjects.Add(new Ledge(brick, screenWidth / 2 - 80, screenWidth / 2 + 80, screenHeight - 400));
             collidableObjects.Add(new Ledge(brick, screenWidth / 2 - 120, screenWidth / 2 - 40, screenHeight - 600));
+
+            PhysicsEngine.objects = collidableObjects;
         }
 
         protected override void UnloadContent()
