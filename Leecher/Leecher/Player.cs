@@ -49,7 +49,7 @@ namespace Leecher
                 if (timeSinceJumpStart.TotalSeconds < 1.2)
                 {
                     if (!PhysicsEngine.IsColliding(new Rectangle(x, y - jumpDelta, width, height))) MoveUp();
-                    else timeSinceJumpStart += new TimeSpan(1, 1, 1, 1, 1);             // dirty, adding a day to time since jump start so that he starts dropping
+                    else timeSinceJumpStart += new TimeSpan(1, 1, 1, 1, 1);             // dirty, adding a day to timeSinceJumpStart so that he starts dropping
                 }
 
                 else
