@@ -46,10 +46,10 @@ namespace Leecher
             {
                 timeSinceJumpStart += gameTime.ElapsedGameTime;
 
-                if (timeSinceJumpStart.TotalSeconds < 1.2)
+                if (timeSinceJumpStart.TotalSeconds < 1.2)          // magic number 1.2 for duration of jump :(
                 {
                     if (!PhysicsEngine.IsColliding(new Rectangle(x, y - jumpDelta, width, height))) MoveUp();
-                    else timeSinceJumpStart += new TimeSpan(1, 1, 1, 1, 1);             // dirty, adding a day to timeSinceJumpStart so that he starts dropping
+                    else timeSinceJumpStart += new TimeSpan(1, 1, 1, 1, 1);             // dirty, adding a day to timeSinceJumpStart so that he starts dropping :(
                 }
 
                 else
@@ -64,7 +64,7 @@ namespace Leecher
                
             }
 
-            else if(state.IsKeyDown(Keys.Up))
+            else if(state.IsKeyDown(Keys.Space))
             {
                 isJumping = true;
                 timeSinceJumpStart = TimeSpan.Zero;

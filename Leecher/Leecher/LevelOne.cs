@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 
 namespace Leecher
 {
@@ -22,10 +21,10 @@ namespace Leecher
             collidableObjects = new List<GameObject>();
         }
 
-        public void Initialise() { 
+        internal void Initialise() { 
         }
 
-        public void LoadContent(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, ContentManager content) {
+        internal void LoadContent(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, ContentManager content) {
             spriteBatch = new SpriteBatch(graphicsDevice);
 
             screenHeight = graphics.GraphicsDevice.Viewport.Height;
@@ -57,7 +56,7 @@ namespace Leecher
             PhysicsEngine.objects = collidableObjects;
         }
 
-        public bool Update(GameTime gameTime) {
+        internal bool Update(GameTime gameTime) {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 return false;
 

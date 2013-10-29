@@ -33,8 +33,6 @@ namespace Leecher
         protected override void LoadContent()
         {
             levelOne.LoadContent(GraphicsDevice, graphics, Content);
-            
-            
         }
 
         protected override void UnloadContent()
