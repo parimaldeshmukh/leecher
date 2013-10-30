@@ -83,11 +83,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="char2.png">
-      <Name>test_subject_no_2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="close_comment.png">
       <Name>close_comment</Name>
       <Importer>TextureImporter</Importer>
@@ -100,6 +95,18 @@
     </Compile>
     <Compile Include="us.png">
       <Name>theCreator</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="char1.png">
+      <Name>test_subject_no_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="char2.png">
+      <Name>char2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
