@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace Leecher
 {
@@ -11,7 +12,7 @@ namespace Leecher
 
         public static List<GameObject> objects;
 
-        public static bool IsColliding(Rectangle thizBox)
+        public static bool IsColliding(Rectangle thizBox, Keys keyPressed, Direction intendedDirection)
         {
             List<GameObject> collidingObjects = objects.FindAll(delegate(GameObject that)
             {
@@ -25,7 +26,7 @@ namespace Leecher
             {
                 bool toReturn = false;
                 collidingObjects.ForEach(delegate(GameObject that) {
-                    toReturn = that.PlayerCollisionEffect() || toReturn;
+                    toReturn = that.PlayerCollisionEffect(keyPressed, intendedDirection) || toReturn;
                 });
 
                 return toReturn;

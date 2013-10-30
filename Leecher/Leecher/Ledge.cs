@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace Leecher
 {
@@ -37,7 +38,7 @@ namespace Leecher
             }
         }
 
-        public bool PlayerCollisionEffect()
+        public bool PlayerCollisionEffect(Keys keyPressed, Direction intendedDirection)
         {
             return true;
         }
