@@ -110,6 +110,7 @@
     <Compile Include="LevelOne.cs" />
     <Compile Include="ClimbableObject.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="LevelTwo.cs" />
     <Compile Include="PhysicsEngine.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Ledge.cs" />

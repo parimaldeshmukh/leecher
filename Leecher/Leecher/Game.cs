@@ -15,40 +15,47 @@ namespace Leecher
     {
         GraphicsDeviceManager graphics;
         LevelOne levelOne;
+        LevelTwo levelTwo;
 
         public Game()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.graphics.IsFullScreen = true;
-            levelOne = new LevelOne();
+            //levelOne = new LevelOne();
+            levelTwo = new LevelTwo();
         }
 
         protected override void Initialize()
         {
-            levelOne.Initialise();
+            //levelOne.Initialise();
+            levelTwo.Initialise();
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            levelOne.LoadContent(GraphicsDevice, graphics, Content);
+            //levelOne.LoadContent(GraphicsDevice, graphics, Content);
+            levelTwo.LoadContent(GraphicsDevice, graphics, Content);
         }
 
         protected override void UnloadContent()
         {
-            levelOne.UnloadContent();
+            //levelOne.UnloadContent();
+            levelTwo.UnloadContent();
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (!levelOne.Update(gameTime)) base.Exit();
+            //if (!levelOne.Update(gameTime)) base.Exit();
+            if (!levelTwo.Update(gameTime)) base.Exit();
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            levelOne.Draw(GraphicsDevice);
+            //levelOne.Draw(GraphicsDevice);
+            levelTwo.Draw(GraphicsDevice);
             base.Draw(gameTime);
         }
 
