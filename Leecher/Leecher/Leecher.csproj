@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Direction.cs" />
+    <Compile Include="Level.cs" />
     <Compile Include="LevelOne.cs" />
     <Compile Include="ClimbableObject.cs" />
     <Compile Include="GameObject.cs" />

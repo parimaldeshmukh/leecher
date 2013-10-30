@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Leecher
 {
-    class LevelTwo
+    class LevelTwo : Level
     {
         List<GameObject> collidableObjects;
         Texture2D background, character, theCreator, brick, shark, code, ground, error;
@@ -21,10 +21,12 @@ namespace Leecher
             collidableObjects = new List<GameObject>();
         }
 
-        internal void Initialise() { 
+        public void Initialise()
+        { 
         }
 
-        internal void LoadContent(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, ContentManager content) {
+        public void LoadContent(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, ContentManager content)
+        {
             spriteBatch = new SpriteBatch(graphicsDevice);
 
             screenHeight = graphics.GraphicsDevice.Viewport.Height;
@@ -55,7 +57,8 @@ namespace Leecher
             PhysicsEngine.objects = collidableObjects;
         }
 
-        internal bool Update(GameTime gameTime) {
+        public bool Update(GameTime gameTime)
+        {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 return false;
 
@@ -63,10 +66,12 @@ namespace Leecher
             return true;
         }
 
-        internal void UnloadContent() {
+        public void UnloadContent()
+        {
         }
 
-        internal void Draw(GraphicsDevice graphicsDevice) {
+        public void Draw(GraphicsDevice graphicsDevice)
+        {
             graphicsDevice.Clear(Color.CornflowerBlue);
 
 

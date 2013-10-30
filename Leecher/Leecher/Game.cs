@@ -14,8 +14,7 @@ namespace Leecher
     public class Game : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
-        LevelOne levelOne;
-        LevelTwo levelTwo;
+        Level level;
 
         public Game()
         {
@@ -23,39 +22,39 @@ namespace Leecher
             Content.RootDirectory = "Content";
             this.graphics.IsFullScreen = true;
             //levelOne = new LevelOne();
-            levelTwo = new LevelTwo();
+            level = new LevelTwo();
         }
 
         protected override void Initialize()
         {
             //levelOne.Initialise();
-            levelTwo.Initialise();
+            level.Initialise();
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             //levelOne.LoadContent(GraphicsDevice, graphics, Content);
-            levelTwo.LoadContent(GraphicsDevice, graphics, Content);
+            level.LoadContent(GraphicsDevice, graphics, Content);
         }
 
         protected override void UnloadContent()
         {
             //levelOne.UnloadContent();
-            levelTwo.UnloadContent();
+            level.UnloadContent();
         }
 
         protected override void Update(GameTime gameTime)
         {
             //if (!levelOne.Update(gameTime)) base.Exit();
-            if (!levelTwo.Update(gameTime)) base.Exit();
+            if (!level.Update(gameTime)) base.Exit();
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             //levelOne.Draw(GraphicsDevice);
-            levelTwo.Draw(GraphicsDevice);
+            level.Draw(GraphicsDevice);
             base.Draw(gameTime);
         }
 
