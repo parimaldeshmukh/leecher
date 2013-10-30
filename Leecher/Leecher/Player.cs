@@ -48,13 +48,13 @@ namespace Leecher
 
                 if (timeSinceJumpStart.TotalSeconds < 1.2)          // magic number 1.2 for duration of jump :(
                 {
-                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y - jumpDelta, width, height))) MoveUp();
+                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y - jumpDelta, width, height), Keys.None, Direction.Up)) MoveUp();
                     else timeSinceJumpStart += new TimeSpan(1, 1, 1, 1, 1);             // dirty, adding a day to timeSinceJumpStart so that he starts dropping :(
                 }
 
                 else
                 {
-                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDelta, width, height))) MoveDown();
+                    if (!PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDelta, width, height), Keys.None, Direction.Down)) MoveDown();
                     else
                     {
                         isJumping = false;
@@ -68,11 +68,21 @@ namespace Leecher
             {
                 isJumping = true;
                 timeSinceJumpStart = TimeSpan.Zero;
-                if (!PhysicsEngine.IsColliding(new Rectangle(x, y - jumpDelta, width, height))) MoveUp();
+                if (!PhysicsEngine.IsColliding(new Rectangle(x, y - jumpDelta, width, height), Keys.None, Direction.Up)) MoveUp();
             }
 
-            if (!isJumping && !PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDelta, width, height))) MoveDown();
+            if (!isJumping && !PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDelta, width, height), Keys.None, Direction.Down)) MoveDown();
             UpdateHorizontalMovement(state, gameObjects);
+
+            if (state.IsKeyDown(Keys.Up))
+            {
+                
+                if (PhysicsEngine.IsColliding(new Rectangle(x, y - deltaMovement, width, height), Keys.Up, Direction.Up))
+                {
+                    MoveUp();
+                }
+            }
+                
         }
 
        
@@ -81,11 +91,11 @@ namespace Leecher
         {
             if (state.IsKeyDown(Keys.Right))
             {
-                if (!PhysicsEngine.IsColliding(new Rectangle(x + deltaMovement, y, width, height))) MoveRight();
+                if (!PhysicsEngine.IsColliding(new Rectangle(x + deltaMovement, y, width, height), Keys.Right, Direction.Right)) MoveRight();
             }
             else if (state.IsKeyDown(Keys.Left))
             {
-                if (!PhysicsEngine.IsColliding(new Rectangle(x - deltaMovement, y, width, height))) MoveLeft();
+                if (!PhysicsEngine.IsColliding(new Rectangle(x - deltaMovement, y, width, height), Keys.Left, Direction.Left)) MoveLeft();
             }
         }
 
@@ -109,6 +119,6 @@ namespace Leecher
             y -= jumpDelta;
         }
 
-        public bool PlayerCollisionEffect() { return false; }
+        public bool PlayerCollisionEffect(Keys keyPressed, Direction intendedDirection) { return false; }
     }
 }

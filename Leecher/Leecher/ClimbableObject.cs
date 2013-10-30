@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace Leecher
 {
@@ -34,9 +35,11 @@ namespace Leecher
         }
 
 
-        public bool PlayerCollisionEffect() // return false to allow player to pass through this object, return true for a real collision
+        public bool PlayerCollisionEffect(Keys keyPressed, Direction intendedDirection) // return false to allow player to pass through this object, return true for a real collision
         {
-            return false;
+            if (intendedDirection == keyPressed.keyToDirection())
+                return false;
+            else return true;
         }
     }
     }
