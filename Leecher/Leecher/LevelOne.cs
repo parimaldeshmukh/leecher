@@ -46,7 +46,7 @@ namespace Leecher
             gameobjects.Add(new CollidableObject(content.Load<Texture2D>(@"branch"), screenWidth - 370, screenHeight - 320, 50, 60));
             gameobjects.Add(new CollidableObject(content.Load<Texture2D>(@"bird"), screenWidth - 170, screenHeight - 440, 40, 40));
             gameobjects.Add(new CollectibleObject(openComment, 300, 100, 40, 40));
-            gameobjects.Add(new CollectibleObject(openComment, screenWidth - 300, screenHeight - 100, 40, 40));
+            gameobjects.Add(new CollectibleObject(closeComment, screenWidth - 300, screenHeight - 100, 40, 40));
 
             gameobjects.Add(new Ledge(brick, 0, screenWidth, screenHeight - 20));
             gameobjects.Add(new Ledge(brick, 320, 480, screenHeight - 150));
