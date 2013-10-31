@@ -107,11 +107,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollectibleObject.cs" />
     <Compile Include="Direction.cs" />
+    <Compile Include="ExitObject.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="LevelOne.cs" />
     <Compile Include="ClimbableObject.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="LevelState.cs" />
     <Compile Include="LevelTwo.cs" />
     <Compile Include="PhysicsEngine.cs" />
     <Compile Include="Player.cs" />

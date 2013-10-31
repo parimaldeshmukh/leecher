@@ -8,18 +8,18 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Leecher
 {
-    class CollidableObject : GameObject
+    class ExitObject : GameObject
     {
         Texture2D texture;
         int x, y, height, width;
-        Rectangle box, collisionBox;
+        Rectangle box;
 
         public Rectangle getCollisionBox()
         {
-            return collisionBox; 
+            return box;
         }
 
-        public CollidableObject(Texture2D tex, int posX, int posY, int objectWidth, int objectHeight, int collisionWidth=0, int collisionHeight=0)
+        public ExitObject(Texture2D tex, int posX, int posY, int objectWidth, int objectHeight)
         {
             texture = tex;
             x = posX;
@@ -27,10 +27,6 @@ namespace Leecher
             width = objectWidth;
             height = objectHeight;
             box = new Rectangle(x, y, width, height);
-
-            if (collisionWidth == 0 || collisionHeight == 0)
-                collisionBox = box;
-            else collisionBox = new Rectangle(x, y, collisionWidth, collisionHeight);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -41,7 +37,11 @@ namespace Leecher
 
         public bool PlayerCollisionEffect(Keys keyPressed, Direction intendedDirection) // return false to allow player to pass through this object, return true for a real collision
         {
-            return true;
+            if (!PhysicsEngine.objects.Exists(delegate(GameObject that) {
+                return typeof(CollectibleObject) == that.GetType();
+            }))
+                PhysicsEngine.objects.Remove(this);
+            return false;
         }
     }
 }

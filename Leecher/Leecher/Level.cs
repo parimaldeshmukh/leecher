@@ -12,7 +12,7 @@ namespace Leecher
     {
         void Initialise();
         void LoadContent(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, ContentManager content);
-        bool Update(GameTime gameTime);
+        LevelState Update(GameTime gameTime);
         void Draw(GraphicsDevice graphicsDevice);
         void UnloadContent();
     }

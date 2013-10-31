@@ -15,6 +15,7 @@ namespace Leecher
     {
         GraphicsDeviceManager graphics;
         Level level;
+        List<Level> levels;
 
         public Game()
         {
@@ -22,27 +23,45 @@ namespace Leecher
             Content.RootDirectory = "Content";
             this.graphics.IsFullScreen = true;
             level = new LevelOne();
+            levels = new List<Level>();
+            levels.Add(level);
+            levels.Add(new LevelTwo());
         }
 
         protected override void Initialize()
         {
-            level.Initialise();
+            levels.ForEach(delegate(Level currentLevel)
+            {
+                currentLevel.Initialise();
+            });
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            level.LoadContent(GraphicsDevice, graphics, Content);
+            levels.ForEach(delegate(Level currentLevel)
+            {
+                currentLevel.LoadContent(GraphicsDevice, graphics, Content);
+            });
         }
 
         protected override void UnloadContent()
         {
-            level.UnloadContent();
+            levels.ForEach(delegate(Level currentLevel)
+            {
+                currentLevel.UnloadContent();
+            });
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (!level.Update(gameTime)) base.Exit();
+            LevelState levelState = level.Update(gameTime);
+            if (levelState == LevelState.Exited) base.Exit();
+            else if (levelState == LevelState.Completed)
+            {
+                int index = levels.FindIndex(delegate(Level current) { return level == current; }) + 1;
+                level = levels.ElementAt(index);
+            }
             base.Update(gameTime);
         }
 

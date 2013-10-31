@@ -54,16 +54,17 @@ namespace Leecher
                 collidableObjects.Add(new Ledge(brick, 880, screenWidth, 460 + i));
 
 
-            PhysicsEngine.objects = collidableObjects;
         }
 
-        public bool Update(GameTime gameTime)
+        public LevelState Update(GameTime gameTime)
         {
+            PhysicsEngine.objects = collidableObjects;
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                return false;
+                return LevelState.Exited;
 
             player.Update(Keyboard.GetState(), gameTime, collidableObjects);
-            return true;
+            return LevelState.InProgress;
         }
 
         public void UnloadContent()
