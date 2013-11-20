@@ -140,8 +140,29 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="error.png">
-      <Name>error</Name>
+    <Compile Include="ledge_error.png">
+      <Name>ledge_error</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="portal1.bmp">
+      <Name>portal1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="portal2.bmp">
+      <Name>portal2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cursor.bmp">
+      <Name>Cursor</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

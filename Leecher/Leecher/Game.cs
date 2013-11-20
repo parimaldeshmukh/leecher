@@ -22,7 +22,7 @@ namespace Leecher
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.graphics.IsFullScreen = true;
-            level = new LevelOne();
+            level = new LevelTwo();
             levels = new List<Level>();
             levels.Add(level);
             levels.Add(new LevelTwo());
@@ -59,7 +59,7 @@ namespace Leecher
             if (levelState == LevelState.Exited) base.Exit();
             else if (levelState == LevelState.Completed)
             {
-                int index = levels.FindIndex(delegate(Level current) { return level == current; }) + 1;
+                int index = (levels.FindIndex(delegate(Level current) { return level == current; }) + 1)%2;
                 level = levels.ElementAt(index);
             }
             base.Update(gameTime);
