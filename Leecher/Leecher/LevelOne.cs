@@ -14,7 +14,7 @@ namespace Leecher
         List<GameObject> gameobjects;
         Texture2D background, character, theCreator, openComment, closeComment, brick;
         SpriteBatch spriteBatch;
-        int screenHeight, screenWidth;
+        int screenHeight, screenWidth, drawAdjustment = 15;
         Player player;
         ExitObject exit;
 
@@ -33,7 +33,7 @@ namespace Leecher
 
         public void init() {
             gameobjects.Add(exit);
-            player = new Player(character, 10, screenHeight - 130);
+            player = new Player(character, 10, screenHeight - 130, drawAdjustment);
             gameobjects.Add(new CollectibleObject(openComment, 300, 100, 40, 40));
             gameobjects.Add(new CollectibleObject(closeComment, screenWidth - 300, screenHeight - 100, 40, 40));
         }
@@ -52,9 +52,9 @@ namespace Leecher
             closeComment = content.Load<Texture2D>(@"close_comment");
             brick = content.Load<Texture2D>(@"brick");
 
-            character1 = content.Load<Texture2D>("sprite_sheet");
+            character1 = content.Load<Texture2D>("sprite_sheet_without");
 
-            player = new Player(character1, 10, screenHeight - 130);
+            player = new Player(character1, 10, screenHeight - 130, drawAdjustment);
 
             
 

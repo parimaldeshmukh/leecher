@@ -192,8 +192,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sprite_sheet.png">
-      <Name>sprite_sheet</Name>
+    <Compile Include="sprite_sheet_arms.png">
+      <Name>sprite_sheet_arms</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="sprite_sheet_without.png">
+      <Name>sprite_sheet_without</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

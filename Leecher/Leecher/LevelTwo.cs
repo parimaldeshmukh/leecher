@@ -14,7 +14,7 @@ namespace Leecher
         List<GameObject> collidableObjects;
         Texture2D background, character, theCreator, brick, shark, code, ground, ledge_error, portal1, portal2, cursor;
         SpriteBatch spriteBatch;
-        int screenHeight, screenWidth, cursorX, cursorY;
+        int screenHeight, screenWidth, cursorX, cursorY, drawAdjustment = 15;
         Player player;
         bool portalsBeingPlaced = false;
         PortalObject portalOne, portalTwo;
@@ -36,7 +36,7 @@ namespace Leecher
             screenWidth = graphics.GraphicsDevice.Viewport.Width;
 
             background = content.Load<Texture2D>(@"background");
-            character = content.Load<Texture2D>(@"char_side_1");
+            character = content.Load<Texture2D>(@"sprite_sheet_arms");
             theCreator = content.Load<Texture2D>(@"theCreator");
             brick = content.Load<Texture2D>(@"brick");
             shark = content.Load<Texture2D>(@"shark");
@@ -47,7 +47,7 @@ namespace Leecher
             portal2 = content.Load<Texture2D>(@"portal2");
             cursor = content.Load<Texture2D>(@"Cursor");
 
-            player = new Player(character, 10, 300);
+            player = new Player(character, 10, 300, drawAdjustment);
 
             exit = new ExitObject(content.Load<Texture2D>(@"exit"), screenWidth - 90, 400, 50, 60);
             collidableObjects.Add(exit);
@@ -78,10 +78,10 @@ namespace Leecher
                         portalsBeingPlaced = false;
                     }
 
-                    else if (Keyboard.GetState().IsKeyDown(Keys.Up)) cursorY -= 5;
-                    else if (Keyboard.GetState().IsKeyDown(Keys.Down)) cursorY += 5;
-                    else if (Keyboard.GetState().IsKeyDown(Keys.Left)) cursorX -= 5;
-                    else if (Keyboard.GetState().IsKeyDown(Keys.Right)) cursorX += 5;
+                    else if (Keyboard.GetState().IsKeyDown(Keys.Up)) cursorY -= 10;
+                    else if (Keyboard.GetState().IsKeyDown(Keys.Down)) cursorY += 10;
+                    else if (Keyboard.GetState().IsKeyDown(Keys.Left)) cursorX -= 10;
+                    else if (Keyboard.GetState().IsKeyDown(Keys.Right)) cursorX += 10;
 
                 }
 
@@ -129,7 +129,7 @@ namespace Leecher
 
         public void init() {
             collidableObjects.Add(exit);
-            player = new Player(character, 10, 300);
+            player = new Player(character, 10, 300, drawAdjustment);
             collidableObjects.RemoveAll(x => x.GetType() == typeof(PortalObject));
         }
 
