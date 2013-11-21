@@ -17,6 +17,8 @@ namespace Leecher
         Level level;
         List<Level> levels;
 
+      
+
         public Game()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -26,6 +28,8 @@ namespace Leecher
             levels = new List<Level>();
             levels.Add(level);
             levels.Add(new LevelTwo());
+
+            TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 100);
         }
 
         protected override void Initialize()
@@ -43,6 +47,8 @@ namespace Leecher
             {
                 currentLevel.LoadContent(GraphicsDevice, graphics, Content);
             });
+
+            
         }
 
         protected override void UnloadContent()
@@ -68,8 +74,13 @@ namespace Leecher
 
         protected override void Draw(GameTime gameTime)
         {
+            
+
+
             level.Draw(GraphicsDevice);
             base.Draw(gameTime);
+
+
         }
 
 

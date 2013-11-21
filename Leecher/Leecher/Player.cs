@@ -17,6 +17,29 @@ namespace Leecher
         int jumpDelta = 2;
         Texture2D texture;
 
+        Vector2 Position; 
+        Point frameSize = new Point(51, 71);
+        Point currentFrame = new Point(0, 0);
+        Point sheetSize = new Point(3, 4);
+
+        KeyboardState currentState;
+        KeyboardState theKeyboardState;
+        KeyboardState oldKeyboardState;
+
+
+        enum State
+        {
+            Walking,
+            Jump
+        }
+
+
+        State mCurrentState = State.Walking;
+
+        TimeSpan nextFrameInterval = TimeSpan.FromSeconds((float)1 / 16);
+
+        TimeSpan nextFrame;
+
         public Player(Texture2D tex, int xPos, int yPos)
         {
             texture = tex;
@@ -25,6 +48,7 @@ namespace Leecher
             isJumping = false;
             width = 70;
             height = 110;
+            Position = new Vector2(x, y);
         }
 
         public Rectangle getCollisionBox()
@@ -35,7 +59,14 @@ namespace Leecher
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, new Rectangle(x, y, width, height), Color.White);
+            spriteBatch.Draw(texture, Position, new Rectangle(
+                                frameSize.X * currentFrame.X,
+                                frameSize.Y * currentFrame.Y,
+                                frameSize.X,
+                                frameSize.Y),
+                                Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            
+            //spriteBatch.Draw(texture, new Rectangle(x, y, width, height), Color.White);
         }
 
         public void Update(KeyboardState state, GameTime gameTime, List<GameObject> gameObjects)
@@ -57,6 +88,28 @@ namespace Leecher
                     {
                         isJumping = false;
                     }
+                }
+
+                currentState = Keyboard.GetState();
+                theKeyboardState = Keyboard.GetState();
+
+                if (mCurrentState == State.Walking)
+                {
+                    currentFrame.X++;
+                    if (currentFrame.X >= 3)
+                        currentFrame.X = 0;
+                }
+
+                oldKeyboardState = theKeyboardState;
+
+                if (currentState.IsKeyDown(Keys.Right))
+                {
+                    
+                }
+
+                if (currentState.IsKeyDown(Keys.Left))
+                {
+                    
                 }
 
                
@@ -99,22 +152,37 @@ namespace Leecher
 
         private void MoveLeft()
         {
+            frameSize = new Point(51, 71);
+            currentFrame.Y = 1;
+            currentFrame.X++;
+            if (currentFrame.X > 2)
+                currentFrame.X = 0;
             x -= deltaMovement;
+            Position = new Vector2(x, y);
+
         }
 
         private void MoveRight()
         {
+            frameSize = new Point(51, 71);
+            currentFrame.Y = 0;
+            currentFrame.X++;
+            if (currentFrame.X > 2)
+                currentFrame.X = 0;
             x += deltaMovement;
+            Position = new Vector2(x, y);
         }
 
         private void MoveDown()
         {
             y += jumpDelta;
+            Position = new Vector2(x, y);
         }
 
         private void MoveUp()
         {
             y -= jumpDelta;
+            Position = new Vector2(x, y);
         }
 
         public bool PlayerCollisionEffect(Keys keyPressed, Direction intendedDirection) { return false; }

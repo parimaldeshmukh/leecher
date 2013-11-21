@@ -18,6 +18,11 @@ namespace Leecher
         Player player;
         ExitObject exit;
 
+
+        Texture2D character1;
+
+        
+
         public LevelOne() {
             gameobjects = new List<GameObject>();
         }
@@ -47,7 +52,11 @@ namespace Leecher
             closeComment = content.Load<Texture2D>(@"close_comment");
             brick = content.Load<Texture2D>(@"brick");
 
-            player = new Player(character, 10, screenHeight - 130);
+            character1 = content.Load<Texture2D>("sprite_sheet");
+
+            player = new Player(character1, 10, screenHeight - 130);
+
+            
 
             exit = new ExitObject(content.Load<Texture2D>(@"exit"), screenWidth - 90, screenHeight - 80, 50, 60);
             gameobjects.Add(exit);
@@ -98,10 +107,17 @@ namespace Leecher
             spriteBatch.Draw(background, backgroundContainer, Color.White);
             spriteBatch.Draw(theCreator, new Rectangle(30, 10, 120, 120), Color.White);
 
+        
+
             DrawStatics();
             player.Draw(spriteBatch);
 
             spriteBatch.End();
+
+
+            
+
+            //spriteBatch.Draw();
             
         }
 
