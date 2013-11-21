@@ -112,13 +112,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="shark.png">
-      <Name>shark</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="code.png">
       <Name>code</Name>
       <Importer>TextureImporter</Importer>
@@ -148,21 +141,52 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="portal1.bmp">
-      <Name>portal1</Name>
+      <Name>portal11</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="portal2.bmp">
-      <Name>portal2</Name>
+      <Name>portal21</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cursor.bmp">
+      <Name>Cursor1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="char_side_1.png">
+      <Name>char_side_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="shark.png">
+      <Name>shark</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="cursor.png">
       <Name>Cursor</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="portal1.png">
+      <Name>portal1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="portal2.png">
+      <Name>portal2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -34,7 +34,7 @@ namespace Leecher
             screenWidth = graphics.GraphicsDevice.Viewport.Width;
 
             background = content.Load<Texture2D>(@"background");
-            character = content.Load<Texture2D>(@"test_subject");
+            character = content.Load<Texture2D>(@"char_side_1");
             theCreator = content.Load<Texture2D>(@"theCreator");
             brick = content.Load<Texture2D>(@"brick");
             shark = content.Load<Texture2D>(@"shark");
