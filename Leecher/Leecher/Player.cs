@@ -15,7 +15,6 @@ namespace Leecher
         TimeSpan timeSinceJumpStart;
         int deltaMovement = 2;
         int jumpDelta = 2;
-        Rectangle box;
         Texture2D texture;
 
         public Player(Texture2D tex, int xPos, int yPos)
@@ -26,12 +25,11 @@ namespace Leecher
             isJumping = false;
             width = 70;
             height = 110;
-            box = new Rectangle(x, y, width, height);
         }
 
         public Rectangle getCollisionBox()
         {
-            return box;
+            return new Rectangle(x,y,width, height);
         }
 
 

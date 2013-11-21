@@ -33,9 +33,9 @@ namespace Leecher
             }
         }
 
-        public static bool IsCollidingWith(GameObject thisObject,GameObject someObject)
+        public static bool IsCollidingWith(Rectangle thisBox,GameObject someObject)
         {
-            return objects.Contains(someObject) && thisObject.getCollisionBox().Intersects(someObject.getCollisionBox());
+            return objects.Contains(someObject) && thisBox.Intersects(someObject.getCollisionBox());
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Leecher
         int screenHeight, screenWidth, cursorX, cursorY;
         Player player;
         bool portalsBeingPlaced = false;
+        PortalObject portalOne, portalTwo;
 
         public LevelTwo() {
             collidableObjects = new List<GameObject>();
@@ -70,7 +71,8 @@ namespace Leecher
                     //place second portal
                     if (Keyboard.GetState().IsKeyDown(Keys.Z))
                     {
-                        collidableObjects.Add(new PortalObject(portal2, cursorX, cursorY, 50, 60));
+                        portalTwo = new PortalObject(portal2, cursorX, cursorY, 50, 60);
+                        collidableObjects.Add(portalTwo);
                         portalsBeingPlaced = false;
                     }
 
@@ -85,15 +87,32 @@ namespace Leecher
                 {
                     // place first portal
                     collidableObjects.RemoveAll(x => x.GetType() == typeof(PortalObject) );
-                    collidableObjects.Add(new PortalObject(portal1, player.x + 100, player.y, 50, 60));
+                    portalOne = new PortalObject(portal1, player.x + 100, player.y, 50, 60);
+                    collidableObjects.Add(portalOne);
                     cursorX = player.x + 100;
                     cursorY = player.y;
                     portalsBeingPlaced = true;
                 }
             
-
             else
             {
+                bool portalsArePlaced = collidableObjects.Exists(x => x.GetType() == typeof(PortalObject));
+                if (portalsArePlaced)
+                {
+                    Rectangle playerBox = player.getCollisionBox();
+                    if (PhysicsEngine.IsCollidingWith(playerBox, portalOne))
+                    {
+                        player.x = portalTwo.getCollisionBox().Right + 10;
+                        player.y = portalTwo.getCollisionBox().Bottom - player.height;
+                    }
+                    else if (PhysicsEngine.IsCollidingWith(playerBox, portalTwo))
+                    {
+                        player.x = portalOne.getCollisionBox().Left - 80;
+                        player.y = portalOne.getCollisionBox().Bottom - player.height;
+                    }
+
+                    portalsBeingPlaced = false;
+                }
                 player.Update(Keyboard.GetState(), gameTime, collidableObjects);
             }
             return LevelState.InProgress;
