@@ -47,18 +47,17 @@ namespace Leecher
             screenWidth = graphics.GraphicsDevice.Viewport.Width;
 
             background = content.Load<Texture2D>(@"background");
-            character = content.Load<Texture2D>(@"char_side_1");
             theCreator = content.Load<Texture2D>(@"theCreator");
             openComment = content.Load<Texture2D>(@"open_comment");
             closeComment = content.Load<Texture2D>(@"close_comment");
             brick = content.Load<Texture2D>(@"brick");
 
-            character1 = content.Load<Texture2D>("sprite_sheet_without");
+            character = content.Load<Texture2D>("sprite_sheet_without");
 
             collect = content.Load<SoundEffect>(@"collect");
             jump = content.Load<SoundEffect>(@"jump");
 
-            player = new Player(character1, 10, screenHeight - 130, jump);
+            player = new Player(character, 10, screenHeight - 130, jump);
 
             
 
