@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Leecher
 {
@@ -14,10 +15,10 @@ namespace Leecher
         List<GameObject> gameobjects;
         Texture2D background, character, theCreator, openComment, closeComment, brick;
         SpriteBatch spriteBatch;
-        int screenHeight, screenWidth, drawAdjustment = 15;
+        int screenHeight, screenWidth;
         Player player;
         ExitObject exit;
-
+        SoundEffect jump, collect;
 
         Texture2D character1;
 
@@ -33,7 +34,7 @@ namespace Leecher
 
         public void init() {
             gameobjects.Add(exit);
-            player = new Player(character, 10, screenHeight - 130, drawAdjustment);
+            player = new Player(character, 10, screenHeight - 130, jump);
             gameobjects.Add(new CollectibleObject(openComment, 300, 100, 40, 40));
             gameobjects.Add(new CollectibleObject(closeComment, screenWidth - 300, screenHeight - 100, 40, 40));
         }
@@ -54,7 +55,10 @@ namespace Leecher
 
             character1 = content.Load<Texture2D>("sprite_sheet_without");
 
-            player = new Player(character1, 10, screenHeight - 130, drawAdjustment);
+            collect = content.Load<SoundEffect>(@"collect");
+            jump = content.Load<SoundEffect>(@"jump");
+
+            player = new Player(character1, 10, screenHeight - 130, jump);
 
             
 
@@ -63,8 +67,13 @@ namespace Leecher
             gameobjects.Add(new CollidableObject(content.Load<Texture2D>(@"tree"), screenWidth - 320, screenHeight - 400, 200, 380, 200, 100));
             gameobjects.Add(new CollidableObject(content.Load<Texture2D>(@"branch"), screenWidth - 370, screenHeight - 320, 50, 60));
             gameobjects.Add(new CollidableObject(content.Load<Texture2D>(@"bird"), screenWidth - 170, screenHeight - 440, 40, 40));
-            gameobjects.Add(new CollectibleObject(openComment, 300, 100, 40, 40));
-            gameobjects.Add(new CollectibleObject(closeComment, screenWidth - 300, screenHeight - 100, 40, 40));
+
+            CollectibleObject temp = new CollectibleObject(openComment, 300, 100, 40, 40);
+            temp.setSound(collect);
+            gameobjects.Add(temp);
+            temp = new CollectibleObject(closeComment, screenWidth - 300, screenHeight - 100, 40, 40);
+            temp.setSound(collect);
+            gameobjects.Add(temp);
 
             gameobjects.Add(new Ledge(brick, 0, screenWidth, screenHeight - 20));
             gameobjects.Add(new Ledge(brick, 320, 480, screenHeight - 150));

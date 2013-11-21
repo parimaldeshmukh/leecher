@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Leecher
 {
@@ -14,11 +15,12 @@ namespace Leecher
         List<GameObject> collidableObjects;
         Texture2D background, character, theCreator, brick, shark, code, ground, ledge_error, portal1, portal2, cursor;
         SpriteBatch spriteBatch;
-        int screenHeight, screenWidth, cursorX, cursorY, drawAdjustment = 15;
+        int screenHeight, screenWidth, cursorX, cursorY;
         Player player;
         bool portalsBeingPlaced = false;
         PortalObject portalOne, portalTwo;
         ExitObject exit;
+        SoundEffect jump, dead;
 
         public LevelTwo() {
             collidableObjects = new List<GameObject>();
@@ -46,8 +48,9 @@ namespace Leecher
             portal1 = content.Load<Texture2D>(@"portal1");
             portal2 = content.Load<Texture2D>(@"portal2");
             cursor = content.Load<Texture2D>(@"Cursor");
-
-            player = new Player(character, 10, 300, drawAdjustment);
+            jump = content.Load<SoundEffect>(@"jump");
+            dead = content.Load<SoundEffect>(@"dead");
+            player = new Player(character, 10, 300, jump);
 
             exit = new ExitObject(content.Load<Texture2D>(@"exit"), screenWidth - 90, 400, 50, 60);
             collidableObjects.Add(exit);
@@ -67,7 +70,10 @@ namespace Leecher
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 return LevelState.Exited;
-
+            if (player.y > screenHeight) {
+                dead.Play();
+                init();
+            }
             if (portalsBeingPlaced)
                 {
                     //place second portal
@@ -128,8 +134,9 @@ namespace Leecher
         }
 
         public void init() {
+            collidableObjects.RemoveAll(x => x.GetType() == typeof(ExitObject));
             collidableObjects.Add(exit);
-            player = new Player(character, 10, 300, drawAdjustment);
+            player = new Player(character, 10, 300, jump);
             collidableObjects.RemoveAll(x => x.GetType() == typeof(PortalObject));
         }
 

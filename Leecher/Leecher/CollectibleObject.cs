@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Leecher
 {
@@ -13,6 +14,7 @@ namespace Leecher
         Texture2D texture;
         int x, y, height, width;
         Rectangle box;
+        SoundEffect collect;
 
         public Rectangle getCollisionBox()
         {
@@ -34,10 +36,15 @@ namespace Leecher
             spriteBatch.Draw(texture, box, Color.White);
         }
 
+        public void setSound(SoundEffect effect)
+        {
+            collect = effect;
+        }
 
         public bool PlayerCollisionEffect(Keys keyPressed, Direction intendedDirection) // return false to allow player to pass through this object, return true for a real collision
         {
             PhysicsEngine.objects.Remove(this);
+            if (collect != null) collect.Play();
             return true;
         }
     }

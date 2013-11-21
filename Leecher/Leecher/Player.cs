@@ -5,17 +5,19 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Leecher
 {
     class Player : GameObject
     {
-        public int x, y, width, height, drawAdjustment;
+        public int x, y, width, height, drawAdjustment = 15;
         bool isJumping;
         TimeSpan timeSinceJumpStart;
         int deltaMovement = 13;
         int jumpDelta = 13;
         Texture2D texture;
+        SoundEffect jumpEffect;
 
         Point frameSize = new Point(60,88);
         Point currentFrame = new Point(0, 0);
@@ -27,7 +29,7 @@ namespace Leecher
         }
 
 
-        public Player(Texture2D tex, int xPos, int yPos, int adjustment)
+        public Player(Texture2D tex, int xPos, int yPos, SoundEffect jump)
         {
             texture = tex;
             x = xPos;
@@ -35,7 +37,7 @@ namespace Leecher
             isJumping = false;
             width = 70;
             height = 110;
-            drawAdjustment = adjustment;
+            jumpEffect = jump;
         }
 
         public Rectangle getCollisionBox()
@@ -107,6 +109,7 @@ namespace Leecher
                 isJumping = true;
                 timeSinceJumpStart = TimeSpan.Zero;
                 if (!PhysicsEngine.IsColliding(new Rectangle(x, y - jumpDelta, width, height), Keys.None, Direction.Up)) MoveUp();
+                jumpEffect.Play();
             }
 
             if (!isJumping && !PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDelta, width, height), Keys.None, Direction.Down)) MoveDown();
