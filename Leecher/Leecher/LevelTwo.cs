@@ -18,6 +18,7 @@ namespace Leecher
         Player player;
         bool portalsBeingPlaced = false;
         PortalObject portalOne, portalTwo;
+        ExitObject exit;
 
         public LevelTwo() {
             collidableObjects = new List<GameObject>();
@@ -48,7 +49,8 @@ namespace Leecher
 
             player = new Player(character, 10, 300);
 
-            collidableObjects.Add(new CollidableObject(content.Load<Texture2D>(@"exit"), screenWidth - 90, 400, 50, 60));
+            exit = new ExitObject(content.Load<Texture2D>(@"exit"), screenWidth - 90, 400, 50, 60);
+            collidableObjects.Add(exit);
 
             for(int i = 0; i < 241; i=i+20)           
             collidableObjects.Add(new Ledge(brick, 0, 360, 460+i));
@@ -115,7 +117,20 @@ namespace Leecher
                 }
                 player.Update(Keyboard.GetState(), gameTime, collidableObjects);
             }
-            return LevelState.InProgress;
+
+
+            if (collidableObjects.Exists(delegate(GameObject gameObject)
+            {
+                return gameObject.GetType() == typeof(ExitObject);
+            })) return LevelState.InProgress;
+
+            return LevelState.Completed;
+        }
+
+        public void init() {
+            collidableObjects.Add(exit);
+            player = new Player(character, 10, 300);
+            collidableObjects.RemoveAll(x => x.GetType() == typeof(PortalObject));
         }
 
         public void UnloadContent()

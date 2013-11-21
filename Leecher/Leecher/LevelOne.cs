@@ -16,6 +16,7 @@ namespace Leecher
         SpriteBatch spriteBatch;
         int screenHeight, screenWidth;
         Player player;
+        ExitObject exit;
 
         public LevelOne() {
             gameobjects = new List<GameObject>();
@@ -23,6 +24,13 @@ namespace Leecher
 
         public void Initialise()
         { 
+        }
+
+        public void init() {
+            gameobjects.Add(exit);
+            player = new Player(character, 10, screenHeight - 130);
+            gameobjects.Add(new CollectibleObject(openComment, 300, 100, 40, 40));
+            gameobjects.Add(new CollectibleObject(closeComment, screenWidth - 300, screenHeight - 100, 40, 40));
         }
 
         public void LoadContent(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, ContentManager content)
@@ -41,7 +49,8 @@ namespace Leecher
 
             player = new Player(character, 10, screenHeight - 130);
 
-            gameobjects.Add(new ExitObject(content.Load<Texture2D>(@"exit"), screenWidth - 90, screenHeight - 80, 50, 60));
+            exit = new ExitObject(content.Load<Texture2D>(@"exit"), screenWidth - 90, screenHeight - 80, 50, 60);
+            gameobjects.Add(exit);
             gameobjects.Add(new CollidableObject(content.Load<Texture2D>(@"tree"), screenWidth - 320, screenHeight - 400, 200, 380, 200, 100));
             gameobjects.Add(new CollidableObject(content.Load<Texture2D>(@"branch"), screenWidth - 370, screenHeight - 320, 50, 60));
             gameobjects.Add(new CollidableObject(content.Load<Texture2D>(@"bird"), screenWidth - 170, screenHeight - 440, 40, 40));
