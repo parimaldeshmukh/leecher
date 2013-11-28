@@ -225,6 +225,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+
     <Compile Include="storyboard-1\scene_11.png">
       <Name>scene_11</Name>
       <Importer>TextureImporter</Importer>
@@ -257,6 +258,11 @@
     </Compile>
     <Compile Include="storyboard-1\scene_17.png">
       <Name>scene_17</Name>
+    </Compile>
+
+    <Compile Include="cow.png">
+      <Name>cow</Name>
+
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -68,7 +68,7 @@ namespace Leecher
             gameobjects.Add(exit);
             gameobjects.Add(new CollidableObject(content.Load<Texture2D>(@"tree"), screenWidth - 320, screenHeight - 400, 200, 380, 200, 100));
             gameobjects.Add(new CollidableObject(content.Load<Texture2D>(@"branch"), screenWidth - 370, screenHeight - 320, 50, 60));
-            gameobjects.Add(new CollidableObject(content.Load<Texture2D>(@"bird"), screenWidth - 170, screenHeight - 440, 40, 40));
+            gameobjects.Add(new CollidableObject(content.Load<Texture2D>(@"cow"), screenWidth - 220, screenHeight - 475, 120, 80));
 
             CollectibleObject temp = new CollectibleObject(openComment, 300, 100, 40, 40);
             temp.setSound(collect);
