@@ -19,13 +19,15 @@ namespace Leecher
         Player player;
         ExitObject exit;
         SoundEffect jump, collect;
-
-        Texture2D character1;
-
+        bool isStartup = true;
+        List<Texture2D> story;
+        Texture2D scene;
+        
         
 
         public LevelOne() {
             gameobjects = new List<GameObject>();
+            story = new List<Texture2D>();
         }
 
         public void Initialise()
@@ -33,6 +35,7 @@ namespace Leecher
         }
 
         public void init() {
+            isStartup = true;
             gameobjects.Add(exit);
             player = new Player(character, 10, screenHeight - 130, jump);
             gameobjects.Add(new CollectibleObject(openComment, 300, 100, 40, 40));
@@ -80,26 +83,52 @@ namespace Leecher
             gameobjects.Add(new Ledge(brick, screenWidth / 2 - 80, screenWidth / 2 + 80, screenHeight - 400));
             gameobjects.Add(new Ledge(brick, screenWidth / 2 - 180, screenWidth / 2 - 100, screenHeight - 500));
 
+            LoadStoryBoards(content);
             
+        }
+
+        private void LoadStoryBoards(ContentManager content)
+        {
+            story.Add(content.Load<Texture2D>(@"storyboard-1/scene_11"));
+            story.Add(content.Load<Texture2D>(@"storyboard-1/scene_12"));
+            story.Add(content.Load<Texture2D>(@"storyboard-1/scene_13"));
+            story.Add(content.Load<Texture2D>(@"storyboard-1/scene_14"));
+            story.Add(content.Load<Texture2D>(@"storyboard-1/scene_15"));
+            story.Add(content.Load<Texture2D>(@"storyboard-1/scene_16"));
+            story.Add(content.Load<Texture2D>(@"storyboard-1/scene_17"));
+
+            scene = story.ElementAt(0);
         }
 
         public LevelState Update(GameTime gameTime)
         {
-            PhysicsEngine.objects = gameobjects;
-
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                return LevelState.Exited;
-
-            player.Update(Keyboard.GetState(), gameTime, gameobjects);
-
-            if (gameobjects.Exists(delegate(GameObject gameObject)
+            if (isStartup) { UpdateStory(gameTime); return LevelState.InProgress; }
+            else
             {
-                return gameObject.GetType() == typeof(ExitObject);
-            })) return LevelState.InProgress;
+                PhysicsEngine.objects = gameobjects;
 
-            return LevelState.Completed;
+                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    return LevelState.Exited;
+
+                player.Update(Keyboard.GetState(), gameTime, gameobjects);
+
+                if (gameobjects.Exists(delegate(GameObject gameObject)
+                {
+                    return gameObject.GetType() == typeof(ExitObject);
+                })) return LevelState.InProgress;
+
+                return LevelState.Completed;
+            }
         }
 
+        private void UpdateStory(GameTime gameTime)
+        {
+            if(gameTime.TotalGameTime.TotalSeconds % 5 == 0){
+            if (story.IndexOf(scene) + 1 == story.Count) isStartup = false;
+            else if(gameTime.TotalGameTime.TotalSeconds != 0)
+                scene = story.ElementAt(story.IndexOf(scene) + 1);
+            }
+        }
         public void UnloadContent()
         {
         }
@@ -112,21 +141,23 @@ namespace Leecher
             Rectangle backgroundContainer = new Rectangle(0, 0, screenWidth, screenHeight);
             spriteBatch.Begin();
 
-            spriteBatch.Draw(background, backgroundContainer, Color.White);
-            spriteBatch.Draw(theCreator, new Rectangle(30, 10, 120, 120), Color.White);
+            if (isStartup) { DrawStory(spriteBatch); }
+            else
+            {
+                spriteBatch.Draw(background, backgroundContainer, Color.White);
+                spriteBatch.Draw(theCreator, new Rectangle(30, 10, 120, 120), Color.White);
 
-        
 
-            DrawStatics();
-            player.Draw(spriteBatch);
 
+                DrawStatics();
+                player.Draw(spriteBatch);
+            }
             spriteBatch.End();
+        }
 
-
-            
-
-            //spriteBatch.Draw();
-            
+        private void DrawStory(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(scene, new Rectangle(0, 0, screenWidth, screenHeight), Color.White);
         }
 
         private void DrawStatics()
