@@ -225,7 +225,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-
     <Compile Include="storyboard-1\scene_11.png">
       <Name>scene_11</Name>
       <Importer>TextureImporter</Importer>
@@ -259,10 +258,36 @@
     <Compile Include="storyboard-1\scene_17.png">
       <Name>scene_17</Name>
     </Compile>
-
     <Compile Include="cow.png">
       <Name>cow</Name>
-
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="storyboard-2\scene_21.png">
+      <Name>scene_21</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="storyboard-2\scene_22.png">
+      <Name>scene_22</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="storyboard-2\scene_23.png">
+      <Name>scene_23</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="storyboard-2\scene_24.png">
+      <Name>scene_24</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="storyboard-2\scene_25.png">
+      <Name>scene_25</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
