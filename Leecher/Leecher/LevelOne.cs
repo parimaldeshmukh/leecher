@@ -97,6 +97,12 @@ namespace Leecher
             story.Add(content.Load<Texture2D>(@"storyboard-1/scene_16"));
             story.Add(content.Load<Texture2D>(@"storyboard-1/scene_17"));
 
+            story.Add(content.Load<Texture2D>(@"storyboard-2/scene_21"));
+            story.Add(content.Load<Texture2D>(@"storyboard-2/scene_22"));
+            story.Add(content.Load<Texture2D>(@"storyboard-2/scene_23"));
+            story.Add(content.Load<Texture2D>(@"storyboard-2/scene_24"));
+            story.Add(content.Load<Texture2D>(@"storyboard-2/scene_25"));
+
             scene = story.ElementAt(0);
         }
 
