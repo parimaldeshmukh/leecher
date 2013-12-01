@@ -306,7 +306,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="bug1.png">
+    <Compile Include="sprite_sheet_bug.png">
       <Name>bug</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>

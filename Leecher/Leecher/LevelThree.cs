@@ -18,7 +18,7 @@ namespace Leecher
         Player player;
         Texture2D background, brick, character, bugZilla;
         SoundEffect jump;
-        MonsterObject bug;
+        MonsterObject bug, dragon;
         ExitObject exit;
 
         public LevelThree()
@@ -32,11 +32,14 @@ namespace Leecher
 
         public void LoadContent(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, ContentManager content)
         {
+            screenHeight = graphics.GraphicsDevice.Viewport.Height;
+            screenWidth = graphics.GraphicsDevice.Viewport.Width;
+
             character = content.Load<Texture2D>(@"sprite_sheet_arms");
             jump = content.Load<SoundEffect>(@"jump");
             player = new Player(character, 10, 400, jump);
-            screenHeight = graphics.GraphicsDevice.Viewport.Height;
-            screenWidth = graphics.GraphicsDevice.Viewport.Width;
+
+           // dragon = new MonsterObject(content.Load<Texture2D>(@"dragon"), screenWidth / 2 - 250, screenHeight - 600, 550, 250);
 
             spriteBatch = new SpriteBatch(graphicsDevice);
             brick = content.Load<Texture2D>(@"brick");
@@ -87,6 +90,7 @@ namespace Leecher
             spriteBatch.Draw(background, new Rectangle(0, 0, screenWidth, screenHeight), Color.White);
             gameObjects.ForEach(x => x.Draw(spriteBatch));
             bug.Draw(spriteBatch);
+          //  dragon.Draw(spriteBatch);
             player.Draw(spriteBatch);
             spriteBatch.End();
         }
