@@ -19,6 +19,7 @@ namespace Leecher
         Texture2D background, brick, character, bugZilla;
         SoundEffect jump;
         MonsterObject bug;
+        ExitObject exit;
 
         public LevelThree()
         {
@@ -44,6 +45,7 @@ namespace Leecher
             bugZilla = content.Load<Texture2D>(@"bug");
             bug = new MonsterObject(bugZilla, screenWidth / 2, screenHeight - 220, 70, 100);
 
+            exit = new ExitObject(content.Load<Texture2D>(@"exit"), screenWidth - 90, screenHeight - 260, 50, 60);
 
             gameObjects.Add(new Ledge(brick, 0, screenWidth, screenHeight - 20));
             gameObjects.Add(new Ledge(brick, 0, screenWidth, screenHeight - 40));
@@ -59,8 +61,9 @@ namespace Leecher
             gameObjects.Add(new Ledge(brick, screenWidth/2 + 280, screenWidth, screenHeight - 180));
             gameObjects.Add(new Ledge(brick, 0, screenWidth / 2 - 280, screenHeight - 200));
             gameObjects.Add(new Ledge(brick, screenWidth / 2 + 280, screenWidth, screenHeight - 200));
-
             gameObjects.Add(new Ledge(brick, screenWidth /2 - 280, screenWidth/2 + 280, screenHeight - 350));
+
+            gameObjects.Add(exit);
         }
 
         public LevelState Update(GameTime gameTime)
