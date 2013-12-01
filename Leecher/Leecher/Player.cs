@@ -15,7 +15,7 @@ namespace Leecher
         bool isJumping;
         TimeSpan timeSinceJumpStart;
         int deltaMovement = 13;
-        int jumpDelta = 13;
+        const int jumpDelta = 13;
         Texture2D texture;
         SoundEffect jumpEffect;
 
@@ -73,6 +73,9 @@ namespace Leecher
                 else
                 {
                     if (!PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDelta, width, height), Keys.None, Direction.Down)) MoveDown();
+                    else if (!PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDelta/2, width, height), Keys.None, Direction.Down)) MoveDown(jumpDelta/2);
+                    else if (!PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDelta / 4, width, height), Keys.None, Direction.Down)) MoveDown(jumpDelta / 4);
+                    else if (!PhysicsEngine.IsColliding(new Rectangle(x, y + jumpDelta / 8, width, height), Keys.None, Direction.Down)) MoveDown(jumpDelta / 8);
                     else
                     {
                         isJumping = false;
@@ -159,9 +162,9 @@ namespace Leecher
             x += deltaMovement;
         }
 
-        private void MoveDown()
+        private void MoveDown(int delta = jumpDelta)
         {
-            y += jumpDelta;
+            y += delta;
         }
 
         private void MoveUp()

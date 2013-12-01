@@ -109,8 +109,10 @@ namespace Leecher
         public LevelState Update(GameTime gameTime)
         {
             if (isStartup) {
-                if (Keyboard.GetState().GetPressedKeys().Length != 0) isStartup = false;
-                UpdateStory(gameTime); return LevelState.InProgress; }
+                if (Keyboard.GetState().GetPressedKeys().Length != 0) 
+                    isStartup = false;
+                UpdateStory(gameTime);
+                return LevelState.InProgress; }
             else
             {
                 PhysicsEngine.objects = gameobjects;
