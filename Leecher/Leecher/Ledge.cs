@@ -27,7 +27,7 @@ namespace Leecher
             to = ledgeTo;
             atHeight = ledgeAtHeight;
 
-            box = new Rectangle(from, atHeight, to - from, 20);
+            box = new Rectangle(from, atHeight, to - from + 20, 20);
         }
 
         public void Draw(SpriteBatch spriteBatch)
