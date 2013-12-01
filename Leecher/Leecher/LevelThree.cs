@@ -16,7 +16,7 @@ namespace Leecher
         List<GameObject> gameObjects;
         int screenHeight, screenWidth;
         Player player;
-        Texture2D background, brick, character;
+        Texture2D background, brick, character, bugZilla;
         SoundEffect jump;
         MonsterObject bug;
 
@@ -41,7 +41,7 @@ namespace Leecher
             brick = content.Load<Texture2D>(@"brick");
             background = content.Load<Texture2D>(@"background");
 
-            Texture2D bugZilla = content.Load<Texture2D>(@"bug");
+            bugZilla = content.Load<Texture2D>(@"bug");
             bug = new MonsterObject(bugZilla, screenWidth / 2, screenHeight - 220, 70, 100);
 
 
@@ -69,6 +69,10 @@ namespace Leecher
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 return LevelState.Exited;
 
+            if(PhysicsEngine.IsCollidingWith(player.getCollisionBox(), bug)) {
+                init();
+            }
+
             bug.Update();
             player.Update(Keyboard.GetState(), gameTime, gameObjects);
             return LevelState.InProgress;
@@ -91,6 +95,8 @@ namespace Leecher
         public void init()
         {
             PhysicsEngine.objects = gameObjects;
+            bug = new MonsterObject(bugZilla, screenWidth / 2, screenHeight - 220, 70, 100);
+            player = new Player(character, 10, 400, jump);
         }
     }
 }

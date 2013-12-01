@@ -37,7 +37,7 @@ namespace Leecher
         public bool PlayerCollisionEffect(Keys keyPresseed, Direction intendedDirection) 
         {
             // reset level
-            return true;
+            return false;
         }
 
 
