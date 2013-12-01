@@ -94,7 +94,7 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
     <Compile Include="us.png">
-      <Name>theCreator</Name>
+      <Name>theCreator1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -264,7 +264,13 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="storyboard-2\scene_26.png">
+      <Name>scene_26</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="storyboard-2\scene_21.png">
       <Name>scene_21</Name>
@@ -288,6 +294,13 @@
     </Compile>
     <Compile Include="storyboard-2\scene_25.png">
       <Name>scene_25</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="creator.png">
+      <Name>theCreator</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
