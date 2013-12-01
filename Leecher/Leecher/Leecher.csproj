@@ -117,6 +117,7 @@
     <Compile Include="LevelState.cs" />
     <Compile Include="LevelThree.cs" />
     <Compile Include="LevelTwo.cs" />
+    <Compile Include="MonsterObject.cs" />
     <Compile Include="PhysicsEngine.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Ledge.cs" />

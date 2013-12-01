@@ -18,6 +18,7 @@ namespace Leecher
         Player player;
         Texture2D background, brick, character;
         SoundEffect jump;
+        MonsterObject bug;
 
         public LevelThree()
         {
@@ -32,13 +33,16 @@ namespace Leecher
         {
             character = content.Load<Texture2D>(@"sprite_sheet_arms");
             jump = content.Load<SoundEffect>(@"jump");
-            player = new Player(character, 10, screenHeight - 310, jump);
+            player = new Player(character, 10, 400, jump);
             screenHeight = graphics.GraphicsDevice.Viewport.Height;
             screenWidth = graphics.GraphicsDevice.Viewport.Width;
 
             spriteBatch = new SpriteBatch(graphicsDevice);
             brick = content.Load<Texture2D>(@"brick");
             background = content.Load<Texture2D>(@"background");
+
+            Texture2D bugZilla = content.Load<Texture2D>(@"bug");
+            bug = new MonsterObject(bugZilla, screenWidth / 2, screenHeight - 220, 70, 100);
 
 
             gameObjects.Add(new Ledge(brick, 0, screenWidth, screenHeight - 20));
@@ -56,7 +60,7 @@ namespace Leecher
             gameObjects.Add(new Ledge(brick, 0, screenWidth / 2 - 280, screenHeight - 200));
             gameObjects.Add(new Ledge(brick, screenWidth / 2 + 280, screenWidth, screenHeight - 200));
 
-            gameObjects.Add(new Ledge(brick, screenWidth /2 - 280, screenWidth/2 + 280, screenHeight - 320));
+            gameObjects.Add(new Ledge(brick, screenWidth /2 - 280, screenWidth/2 + 280, screenHeight - 350));
         }
 
         public LevelState Update(GameTime gameTime)
@@ -65,6 +69,7 @@ namespace Leecher
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 return LevelState.Exited;
 
+            bug.Update();
             player.Update(Keyboard.GetState(), gameTime, gameObjects);
             return LevelState.InProgress;
         }
@@ -74,6 +79,7 @@ namespace Leecher
             spriteBatch.Begin();
             spriteBatch.Draw(background, new Rectangle(0, 0, screenWidth, screenHeight), Color.White);
             gameObjects.ForEach(x => x.Draw(spriteBatch));
+            bug.Draw(spriteBatch);
             player.Draw(spriteBatch);
             spriteBatch.End();
         }
