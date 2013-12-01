@@ -61,8 +61,11 @@ namespace Leecher
 
         public LevelState Update(GameTime gameTime)
         {
+            PhysicsEngine.objects = gameObjects;
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 return LevelState.Exited;
+
+            player.Update(Keyboard.GetState(), gameTime, gameObjects);
             return LevelState.InProgress;
         }
 
@@ -71,6 +74,7 @@ namespace Leecher
             spriteBatch.Begin();
             spriteBatch.Draw(background, new Rectangle(0, 0, screenWidth, screenHeight), Color.White);
             gameObjects.ForEach(x => x.Draw(spriteBatch));
+            player.Draw(spriteBatch);
             spriteBatch.End();
         }
 
@@ -80,6 +84,7 @@ namespace Leecher
 
         public void init()
         {
+            PhysicsEngine.objects = gameObjects;
         }
     }
 }

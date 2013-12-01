@@ -17,14 +17,12 @@ namespace Leecher
         Level level;
         List<Level> levels;
 
-      
-
         public Game()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.graphics.IsFullScreen = true;
-            level = new LevelOne();
+            level = new LevelThree();
             levels = new List<Level>();
             levels.Add(level);
             levels.Add(new LevelTwo());
@@ -75,13 +73,9 @@ namespace Leecher
 
         protected override void Draw(GameTime gameTime)
         {
-            
-
 
             level.Draw(GraphicsDevice);
             base.Draw(gameTime);
-
-
         }
 
 
