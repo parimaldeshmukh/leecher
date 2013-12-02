@@ -50,7 +50,7 @@ namespace Leecher
             cursor = content.Load<Texture2D>(@"Cursor");
             jump = content.Load<SoundEffect>(@"jump");
             dead = content.Load<SoundEffect>(@"dead");
-            player = new Player(character, 10, 300, jump);
+            player = new Player(character, 10, 350, jump);
 
             exit = new ExitObject(content.Load<Texture2D>(@"exit"), screenWidth - 90, 400, 50, 60);
             collidableObjects.Add(exit);
@@ -136,7 +136,7 @@ namespace Leecher
         public void init() {
             collidableObjects.RemoveAll(x => x.GetType() == typeof(ExitObject));
             collidableObjects.Add(exit);
-            player = new Player(character, 10, 300, jump);
+            player = new Player(character, 10, 350, jump);
             collidableObjects.RemoveAll(x => x.GetType() == typeof(PortalObject));
         }
 

@@ -77,6 +77,11 @@ namespace Leecher
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 return LevelState.Exited;
 
+            if (!gameObjects.Exists(delegate(GameObject gameObject)
+            {
+                return gameObject.GetType() == typeof(ExitObject);
+            })) return LevelState.Completed;
+
             if (PhysicsEngine.IsCollidingWith(player.getCollisionBox(), bug) || PhysicsEngine.IsCollidingWith(player.getCollisionBox(), dragon) && dragon.isFatal())
             {
                 init();
@@ -114,7 +119,7 @@ namespace Leecher
         {
             PhysicsEngine.objects = gameObjects;
             bug = new MonsterObject(bugZilla, screenWidth / 2, screenHeight - 220, 70, 100);
-            player = new Player(character, 10, 400, jump);
+            player = new Player(character, 10, 410, jump);
         }
     }
 }
