@@ -21,7 +21,7 @@ namespace Leecher
         SoundEffect jump, collect;
         bool isStartup = true;
         List<Texture2D> story;
-        Texture2D scene;
+        Texture2D scene, life;
         
         
 
@@ -48,7 +48,7 @@ namespace Leecher
         public void LoadContent(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, ContentManager content)
         {
             spriteBatch = new SpriteBatch(graphicsDevice);
-
+            life = content.Load<Texture2D>(@"life");
             screenHeight = graphics.GraphicsDevice.Viewport.Height;
             screenWidth = graphics.GraphicsDevice.Viewport.Width;
 
@@ -109,28 +109,28 @@ namespace Leecher
             scene = story.ElementAt(0);
         }
 
-        public LevelState Update(GameTime gameTime)
+        public Tuple<LevelState,int> Update(GameTime gameTime)
         {
             if (isStartup) {
                 if (Keyboard.GetState().GetPressedKeys().Length != 0) 
                     isStartup = false;
                 UpdateStory(gameTime);
-                return LevelState.InProgress; }
+                return Tuple.Create(LevelState.InProgress, livesLeft); }
             else
             {
                 PhysicsEngine.objects = gameobjects;
 
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                    return LevelState.Exited;
+                    return Tuple.Create(LevelState.Exited, livesLeft);
 
                 player.Update(Keyboard.GetState(), gameTime, gameobjects);
 
                 if (gameobjects.Exists(delegate(GameObject gameObject)
                 {
                     return gameObject.GetType() == typeof(ExitObject);
-                })) return LevelState.InProgress;
+                })) return Tuple.Create(LevelState.InProgress, livesLeft);
 
-                return LevelState.Completed;
+                return Tuple.Create(LevelState.Completed, livesLeft);
             }
         }
 
@@ -160,7 +160,10 @@ namespace Leecher
                 spriteBatch.Draw(background, backgroundContainer, Color.White);
                 spriteBatch.Draw(theCreator, new Rectangle(30, 10, 120, 120), Color.White);
 
-
+                for (int index = 0; index < livesLeft; index++)
+                {
+                    spriteBatch.Draw(life, new Rectangle(screenWidth - 40 * (index+1), 0, 40, 40), Color.White);
+                }
 
                 DrawStatics();
                 player.Draw(spriteBatch);

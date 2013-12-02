@@ -13,7 +13,7 @@ namespace Leecher
     class LevelTwo : Level
     {
         List<GameObject> collidableObjects;
-        Texture2D background, character, theCreator, brick, shark, code, ground, ledge_error, portal1, portal2, cursor;
+        Texture2D background, character, theCreator, brick, shark, code, ground, ledge_error, portal1, portal2, cursor, life;
         SpriteBatch spriteBatch;
         int screenHeight, screenWidth, cursorX, cursorY, livesLeft;
         Player player;
@@ -37,7 +37,7 @@ namespace Leecher
 
             screenHeight = graphics.GraphicsDevice.Viewport.Height;
             screenWidth = graphics.GraphicsDevice.Viewport.Width;
-
+            life = content.Load<Texture2D>(@"life");
             background = content.Load<Texture2D>(@"background");
             character = content.Load<Texture2D>(@"sprite_sheet_arms");
             theCreator = content.Load<Texture2D>(@"theCreator");
@@ -65,16 +65,16 @@ namespace Leecher
 
         }
 
-        public LevelState Update(GameTime gameTime)
+        public Tuple<LevelState, int> Update(GameTime gameTime)
         {
             PhysicsEngine.objects = collidableObjects;
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                return LevelState.Exited;
+                return Tuple.Create(LevelState.Exited, livesLeft);;
             if (player.y > screenHeight) {
                 dead.Play();
                 if (livesLeft > 1) init(livesLeft - 1);
-                else return LevelState.NoLivesLeft;
+                else return Tuple.Create(LevelState.NoLivesLeft, livesLeft);;
             }
             if (portalsBeingPlaced)
                 {
@@ -130,9 +130,9 @@ namespace Leecher
             if (collidableObjects.Exists(delegate(GameObject gameObject)
             {
                 return gameObject.GetType() == typeof(ExitObject);
-            })) return LevelState.InProgress;
+            })) return Tuple.Create(LevelState.InProgress, livesLeft);
 
-            return LevelState.Completed;
+            return Tuple.Create(LevelState.Completed, livesLeft);
         }
 
         public void init(int livesLeft) {
@@ -162,6 +162,11 @@ namespace Leecher
             if(portalsBeingPlaced) spriteBatch.Draw(cursor, new Rectangle(cursorX, cursorY, 50, 60), Color.White);
 
             spriteBatch.Draw(ledge_error, new Rectangle(450, 320, 400, 40), Color.White);
+
+            for (int index = 0; index < livesLeft; index++)
+            {
+                spriteBatch.Draw(life, new Rectangle(screenWidth - 40 * (index + 1), 0, 40, 40), Color.White);
+            }
 
             DrawStatics();
             player.Draw(spriteBatch);

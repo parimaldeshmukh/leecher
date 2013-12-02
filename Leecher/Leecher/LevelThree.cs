@@ -16,7 +16,7 @@ namespace Leecher
         List<GameObject> gameObjects;
         int screenHeight, screenWidth, livesLeft;
         Player player;
-        Texture2D background, brick, character, bugZilla;
+        Texture2D background, brick, character, life, bugZilla;
         SoundEffect jump;
         MonsterObject bug, dragon;
         ExitObject exit;
@@ -35,6 +35,8 @@ namespace Leecher
         {
             screenHeight = graphics.GraphicsDevice.Viewport.Height;
             screenWidth = graphics.GraphicsDevice.Viewport.Width;
+
+            life = content.Load<Texture2D>(@"life");
 
             character = content.Load<Texture2D>(@"sprite_sheet_arms");
             jump = content.Load<SoundEffect>(@"jump");
@@ -72,21 +74,21 @@ namespace Leecher
             gameObjects.Add(exit);
         }
 
-        public LevelState Update(GameTime gameTime)
+        public Tuple<LevelState,int> Update(GameTime gameTime)
         {
             PhysicsEngine.objects = gameObjects;
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                return LevelState.Exited;
+                return Tuple.Create(LevelState.Exited, livesLeft);
 
             if (!gameObjects.Exists(delegate(GameObject gameObject)
             {
                 return gameObject.GetType() == typeof(ExitObject);
-            })) return LevelState.Completed;
+            })) return Tuple.Create(LevelState.Completed, livesLeft);
 
             if (PhysicsEngine.IsCollidingWith(player.getCollisionBox(), bug) || PhysicsEngine.IsCollidingWith(player.getCollisionBox(), dragon) && dragon.isFatal())
             {
                 if (livesLeft > 1) init(livesLeft - 1);
-                else return LevelState.NoLivesLeft;
+                else return Tuple.Create(LevelState.NoLivesLeft, livesLeft);
             }
 
             if(Keyboard.GetState().IsKeyDown(Keys.X)) {
@@ -99,7 +101,7 @@ namespace Leecher
 
             player.deltaMovement = 13;
 
-            return LevelState.InProgress;
+            return Tuple.Create(LevelState.InProgress, livesLeft);
         }
 
         public void Draw(GraphicsDevice graphicsDevice)
@@ -109,6 +111,12 @@ namespace Leecher
             gameObjects.ForEach(x => x.Draw(spriteBatch));
             bug.Draw(spriteBatch);
             dragon.Draw(spriteBatch);
+
+            for (int index = 0; index < livesLeft; index++)
+            {
+                spriteBatch.Draw(life, new Rectangle(screenWidth - 40 * (index + 1), 0, 40, 40), Color.White);
+            }
+
             player.Draw(spriteBatch);
             spriteBatch.End();
         }
