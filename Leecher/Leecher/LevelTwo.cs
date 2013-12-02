@@ -20,10 +20,12 @@ namespace Leecher
         bool portalsBeingPlaced = false;
         PortalObject portalOne, portalTwo;
         ExitObject exit;
+        GameTime initAt;
         SoundEffect jump, dead;
 
-        public LevelTwo(int livesLeft) {
+        public LevelTwo(int livesLeft, GameTime gameTime) {
             collidableObjects = new List<GameObject>();
+            initAt = gameTime;
             this.livesLeft = livesLeft;
         }
 
@@ -73,7 +75,7 @@ namespace Leecher
                 return Tuple.Create(LevelState.Exited, livesLeft);;
             if (player.y > screenHeight) {
                 dead.Play();
-                if (livesLeft > 1) init(livesLeft - 1);
+                if (livesLeft > 1) init(livesLeft - 1, gameTime);
                 else return Tuple.Create(LevelState.NoLivesLeft, livesLeft);;
             }
             if (portalsBeingPlaced)
@@ -135,8 +137,9 @@ namespace Leecher
             return Tuple.Create(LevelState.Completed, livesLeft);
         }
 
-        public void init(int livesLeft) {
+        public void init(int livesLeft, GameTime gameTime) {
             this.livesLeft = livesLeft;
+            initAt = gameTime;
             collidableObjects.RemoveAll(x => x.GetType() == typeof(ExitObject));
             collidableObjects.Add(exit);
             player = new Player(character, 10, 350, jump);

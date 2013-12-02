@@ -15,6 +15,6 @@ namespace Leecher
         Tuple<LevelState, int> Update(GameTime gameTime);
         void Draw(GraphicsDevice graphicsDevice);
         void UnloadContent();
-        void init(int livesLeft);
+        void init(int livesLeft, GameTime gameTime);
     }
 }

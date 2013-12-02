@@ -16,15 +16,21 @@ namespace Leecher
         List<GameObject> gameObjects;
         int screenHeight, screenWidth, livesLeft;
         Player player;
-        Texture2D background, brick, character, life, bugZilla;
+        Texture2D background, brick, character, life, bugZilla, scene;
         SoundEffect jump;
         MonsterObject bug, dragon;
         ExitObject exit;
+        List<Texture2D> story;
+        bool isStartup;
+        GameTime initAt;
 
-        public LevelThree(int livesLeft)
+        public LevelThree(int livesLeft, GameTime gameTime)
         {
             gameObjects = new List<GameObject>();
             this.livesLeft = livesLeft;
+            story = new List<Texture2D>();
+            isStartup = true;
+            initAt = gameTime;
         }
 
         public void Initialise()
@@ -72,10 +78,29 @@ namespace Leecher
             gameObjects.Add(new Ledge(brick, screenWidth /2 - 280, screenWidth/2 + 280, screenHeight - 350));
 
             gameObjects.Add(exit);
+
+            LoadStoryBoards(content);
+        }
+
+        private void LoadStoryBoards(ContentManager content)
+        {
+            story.Add(content.Load<Texture2D>(@"storyboard-4/scene_41"));
+            story.Add(content.Load<Texture2D>(@"storyboard-4/scene_42"));
+
+            scene = story.ElementAt(0);
         }
 
         public Tuple<LevelState,int> Update(GameTime gameTime)
         {
+
+            if (isStartup)
+            {
+                if (Keyboard.GetState().GetPressedKeys().Length != 0)
+                    //isStartup = false;
+                UpdateStory(gameTime);
+                return Tuple.Create(LevelState.InProgress, livesLeft);
+            }
+
             PhysicsEngine.objects = gameObjects;
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 return Tuple.Create(LevelState.Exited, livesLeft);
@@ -87,7 +112,7 @@ namespace Leecher
 
             if (PhysicsEngine.IsCollidingWith(player.getCollisionBox(), bug) || PhysicsEngine.IsCollidingWith(player.getCollisionBox(), dragon) && dragon.isFatal())
             {
-                if (livesLeft > 1) init(livesLeft - 1);
+                if (livesLeft > 1) init(livesLeft - 1, gameTime);
                 else return Tuple.Create(LevelState.NoLivesLeft, livesLeft);
             }
 
@@ -104,29 +129,50 @@ namespace Leecher
             return Tuple.Create(LevelState.InProgress, livesLeft);
         }
 
+        private void UpdateStory(GameTime gameTime)
+        {
+            if ((gameTime.TotalGameTime.TotalSeconds - initAt.TotalGameTime.TotalSeconds) % 5 == 0)
+            {
+                if (story.IndexOf(scene) + 1 == story.Count) isStartup = false;
+                else if (gameTime.TotalGameTime.TotalSeconds != 0)
+                    scene = story.ElementAt(story.IndexOf(scene) + 1);
+            }
+        }
+
         public void Draw(GraphicsDevice graphicsDevice)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(background, new Rectangle(0, 0, screenWidth, screenHeight), Color.White);
-            gameObjects.ForEach(x => x.Draw(spriteBatch));
-            bug.Draw(spriteBatch);
-            dragon.Draw(spriteBatch);
 
-            for (int index = 0; index < livesLeft; index++)
+            if (isStartup) { DrawStory(spriteBatch); }
+            else
             {
-                spriteBatch.Draw(life, new Rectangle(screenWidth - 40 * (index + 1), 0, 40, 40), Color.White);
-            }
+                spriteBatch.Draw(background, new Rectangle(0, 0, screenWidth, screenHeight), Color.White);
+                gameObjects.ForEach(x => x.Draw(spriteBatch));
+                bug.Draw(spriteBatch);
+                dragon.Draw(spriteBatch);
 
-            player.Draw(spriteBatch);
+                for (int index = 0; index < livesLeft; index++)
+                {
+                    spriteBatch.Draw(life, new Rectangle(screenWidth - 40 * (index + 1), 0, 40, 40), Color.White);
+                }
+
+                player.Draw(spriteBatch);
+            }
             spriteBatch.End();
+        }
+
+        private void DrawStory(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(scene, new Rectangle(0, 0, screenWidth, screenHeight), Color.White);
         }
 
         public void UnloadContent()
         {
         }
 
-        public void init(int livesLeft)
+        public void init(int livesLeft, GameTime gameTime)
         {
+            initAt = gameTime;
             this.livesLeft = livesLeft;
             PhysicsEngine.objects = gameObjects;
             bug = new MonsterObject(bugZilla, screenWidth / 2, screenHeight - 220, 70, 100);

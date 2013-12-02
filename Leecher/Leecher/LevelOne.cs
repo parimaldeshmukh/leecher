@@ -20,13 +20,15 @@ namespace Leecher
         ExitObject exit;
         SoundEffect jump, collect;
         bool isStartup = true;
+        GameTime initAt;
         List<Texture2D> story;
         Texture2D scene, life;
         
         
 
-        public LevelOne(int livesLeft) {
+        public LevelOne(int livesLeft, GameTime gameTime) {
             gameobjects = new List<GameObject>();
+            initAt = gameTime;
             story = new List<Texture2D>();
             this.livesLeft = livesLeft;
         }
@@ -35,8 +37,9 @@ namespace Leecher
         { 
         }
 
-        public void init(int livesLeft)
+        public void init(int livesLeft, GameTime gameTime)
         {
+            initAt = gameTime;
             this.livesLeft = livesLeft;
             isStartup = true;
             gameobjects.Add(exit);

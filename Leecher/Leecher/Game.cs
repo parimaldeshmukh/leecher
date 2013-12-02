@@ -23,11 +23,11 @@ namespace Leecher
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.graphics.IsFullScreen = true;
-            level = new LevelOne(totalLives);
+            level = new LevelOne(totalLives, new GameTime());
             levels = new List<Level>();
             levels.Add(level);
-            levels.Add(new LevelTwo(totalLives));
-            levels.Add(new LevelThree(totalLives));
+            levels.Add(new LevelTwo(totalLives, new GameTime()));
+            levels.Add(new LevelThree(totalLives, new GameTime()));
 
             TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 100);
         }
@@ -68,11 +68,11 @@ namespace Leecher
             {
                 int index = (levels.FindIndex(delegate(Level current) { return level == current; }) + 1)%3;
                 level = levels.ElementAt(index);
-                level.init(tuple.Item2);
+                level.init(tuple.Item2, gameTime);
             }
             else if (levelState == LevelState.NoLivesLeft) {
                 level = levels.ElementAt(0);
-                level.init(totalLives);
+                level.init(totalLives, gameTime);
             }
             base.Update(gameTime);
         }
