@@ -14,6 +14,7 @@ namespace Leecher
         int x, y, width, height, deltaX;
         Texture2D text;
         Point frameSize = new Point(35, 62), currentFrame = new Point(0, 0);
+        Rectangle collisionBox;
 
         public MonsterObject(Texture2D texture, int xPos, int yPos, int Width, int Height, int delta = -3)
         {
@@ -23,6 +24,17 @@ namespace Leecher
             width = Width;
             height = Height;
             deltaX = delta;
+            collisionBox = Rectangle.Empty;
+        }
+
+        public void setFrameSize(int x, int y)
+        {
+            frameSize = new Point(x,y);
+        }
+
+        public void setCollisionBox(int x, int y, int width, int height)
+        {
+            collisionBox = new Rectangle(x, y, width, height);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -38,7 +50,7 @@ namespace Leecher
 
         public Rectangle getCollisionBox()
         {
-            return new Rectangle(x, y, width, height);
+            return collisionBox == Rectangle.Empty? new Rectangle(x, y, width, height) : collisionBox;
         }
 
         public bool PlayerCollisionEffect(Keys keyPresseed, Direction intendedDirection) 
@@ -46,10 +58,10 @@ namespace Leecher
             // reset level
             return false;
         }
-
-
         // this will trigger all GameObject effects the same as if player collides :(
-        public void Update()
+
+        
+        public void Update(GameTime gameTime)
         {
             if (PhysicsEngine.IsColliding(new Rectangle(x + deltaX, y, width, height), Keys.None, deltaX > 0 ? Direction.Right : Direction.Left))
             {
@@ -60,8 +72,14 @@ namespace Leecher
             else
             {
                 x += deltaX;
-                currentFrame.X = (currentFrame.X + 1) % 3;
+                currentFrame.X = deltaX!=0? (currentFrame.X + 1) % 3 : gameTime.TotalGameTime.TotalSeconds % 2 == 0? (currentFrame.X + 1) % 3: currentFrame.X;
             }
+        }
+
+        internal bool isFatal()
+        {
+            if (currentFrame.X != 2) return true;
+            return false;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Leecher
         public int x, y, width, height, drawAdjustment = 15;
         bool isJumping;
         TimeSpan timeSinceJumpStart;
-        int deltaMovement = 13;
+        public int deltaMovement = 13;
         const int jumpDelta = 13;
         Texture2D texture;
         SoundEffect jumpEffect;

@@ -37,9 +37,11 @@ namespace Leecher
 
             character = content.Load<Texture2D>(@"sprite_sheet_arms");
             jump = content.Load<SoundEffect>(@"jump");
-            player = new Player(character, 10, 400, jump);
+            player = new Player(character, 10, 410, jump);
 
-           // dragon = new MonsterObject(content.Load<Texture2D>(@"dragon"), screenWidth / 2 - 250, screenHeight - 600, 550, 250);
+           dragon = new MonsterObject(content.Load<Texture2D>(@"dragon"), screenWidth / 2 - 250, screenHeight - 600, 550, 250, 0);
+           dragon.setFrameSize(539, 389);
+           dragon.setCollisionBox(screenWidth / 2 - 120, screenHeight - 600, 240, 250);
 
             spriteBatch = new SpriteBatch(graphicsDevice);
             brick = content.Load<Texture2D>(@"brick");
@@ -75,12 +77,21 @@ namespace Leecher
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 return LevelState.Exited;
 
-            if(PhysicsEngine.IsCollidingWith(player.getCollisionBox(), bug)) {
+            if (PhysicsEngine.IsCollidingWith(player.getCollisionBox(), bug) || PhysicsEngine.IsCollidingWith(player.getCollisionBox(), dragon) && dragon.isFatal())
+            {
                 init();
             }
 
-            bug.Update();
+            if(Keyboard.GetState().IsKeyDown(Keys.X)) {
+                player.deltaMovement = 39;
+            }
+
+            bug.Update(gameTime);
+            dragon.Update(gameTime);
             player.Update(Keyboard.GetState(), gameTime, gameObjects);
+
+            player.deltaMovement = 13;
+
             return LevelState.InProgress;
         }
 
@@ -90,7 +101,7 @@ namespace Leecher
             spriteBatch.Draw(background, new Rectangle(0, 0, screenWidth, screenHeight), Color.White);
             gameObjects.ForEach(x => x.Draw(spriteBatch));
             bug.Draw(spriteBatch);
-          //  dragon.Draw(spriteBatch);
+            dragon.Draw(spriteBatch);
             player.Draw(spriteBatch);
             spriteBatch.End();
         }
