@@ -14,16 +14,17 @@ namespace Leecher
     {
         SpriteBatch spriteBatch;
         List<GameObject> gameObjects;
-        int screenHeight, screenWidth;
+        int screenHeight, screenWidth, livesLeft;
         Player player;
         Texture2D background, brick, character, bugZilla;
         SoundEffect jump;
         MonsterObject bug, dragon;
         ExitObject exit;
 
-        public LevelThree()
+        public LevelThree(int livesLeft)
         {
             gameObjects = new List<GameObject>();
+            this.livesLeft = livesLeft;
         }
 
         public void Initialise()
@@ -84,7 +85,8 @@ namespace Leecher
 
             if (PhysicsEngine.IsCollidingWith(player.getCollisionBox(), bug) || PhysicsEngine.IsCollidingWith(player.getCollisionBox(), dragon) && dragon.isFatal())
             {
-                init();
+                if (livesLeft > 1) init(livesLeft - 1);
+                else return LevelState.NoLivesLeft;
             }
 
             if(Keyboard.GetState().IsKeyDown(Keys.X)) {
@@ -115,8 +117,9 @@ namespace Leecher
         {
         }
 
-        public void init()
+        public void init(int livesLeft)
         {
+            this.livesLeft = livesLeft;
             PhysicsEngine.objects = gameObjects;
             bug = new MonsterObject(bugZilla, screenWidth / 2, screenHeight - 220, 70, 100);
             player = new Player(character, 10, 410, jump);

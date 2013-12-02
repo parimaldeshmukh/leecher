@@ -15,7 +15,7 @@ namespace Leecher
         List<GameObject> gameobjects;
         Texture2D background, character, theCreator, openComment, closeComment, brick;
         SpriteBatch spriteBatch;
-        int screenHeight, screenWidth;
+        int screenHeight, screenWidth, livesLeft;
         Player player;
         ExitObject exit;
         SoundEffect jump, collect;
@@ -25,16 +25,19 @@ namespace Leecher
         
         
 
-        public LevelOne() {
+        public LevelOne(int livesLeft) {
             gameobjects = new List<GameObject>();
             story = new List<Texture2D>();
+            this.livesLeft = livesLeft;
         }
 
         public void Initialise()
         { 
         }
 
-        public void init() {
+        public void init(int livesLeft)
+        {
+            this.livesLeft = livesLeft;
             isStartup = true;
             gameobjects.Add(exit);
             player = new Player(character, 10, screenHeight - 130, jump);

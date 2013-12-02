@@ -15,15 +15,16 @@ namespace Leecher
         List<GameObject> collidableObjects;
         Texture2D background, character, theCreator, brick, shark, code, ground, ledge_error, portal1, portal2, cursor;
         SpriteBatch spriteBatch;
-        int screenHeight, screenWidth, cursorX, cursorY;
+        int screenHeight, screenWidth, cursorX, cursorY, livesLeft;
         Player player;
         bool portalsBeingPlaced = false;
         PortalObject portalOne, portalTwo;
         ExitObject exit;
         SoundEffect jump, dead;
 
-        public LevelTwo() {
+        public LevelTwo(int livesLeft) {
             collidableObjects = new List<GameObject>();
+            this.livesLeft = livesLeft;
         }
 
         public void Initialise()
@@ -72,7 +73,8 @@ namespace Leecher
                 return LevelState.Exited;
             if (player.y > screenHeight) {
                 dead.Play();
-                init();
+                if (livesLeft > 1) init(livesLeft - 1);
+                else return LevelState.NoLivesLeft;
             }
             if (portalsBeingPlaced)
                 {
@@ -133,7 +135,8 @@ namespace Leecher
             return LevelState.Completed;
         }
 
-        public void init() {
+        public void init(int livesLeft) {
+            this.livesLeft = livesLeft;
             collidableObjects.RemoveAll(x => x.GetType() == typeof(ExitObject));
             collidableObjects.Add(exit);
             player = new Player(character, 10, 350, jump);

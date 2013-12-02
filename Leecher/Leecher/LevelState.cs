@@ -9,6 +9,7 @@ namespace Leecher
     {
         InProgress,
         Completed,
-        Exited
+        Exited,
+        NoLivesLeft
     }
 }

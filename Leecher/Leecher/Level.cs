@@ -15,6 +15,6 @@ namespace Leecher
         LevelState Update(GameTime gameTime);
         void Draw(GraphicsDevice graphicsDevice);
         void UnloadContent();
-        void init();
+        void init(int livesLeft);
     }
 }
