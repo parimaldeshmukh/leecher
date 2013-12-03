@@ -169,6 +169,8 @@ namespace Leecher
             player = new Player(character, 10, 350, jump);
             collidableObjects.RemoveAll(x => x.GetType() == typeof(PortalObject));
             collidableObjects.Add(gun);
+            isStartup = true;
+            updateCount = 0;
         }
 
         public void UnloadContent()

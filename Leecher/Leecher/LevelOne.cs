@@ -50,6 +50,7 @@ namespace Leecher
             temp = new CollectibleObject(closeComment, screenWidth - 300, screenHeight - 100, 40, 40);
             temp.setSound(collect);
             gameobjects.Add(temp);
+            scene = story.ElementAt(0);
         }
 
         public void LoadContent(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, ContentManager content)

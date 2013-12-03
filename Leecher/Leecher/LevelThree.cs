@@ -14,15 +14,16 @@ namespace Leecher
     {
         SpriteBatch spriteBatch;
         List<GameObject> gameObjects;
-        int screenHeight, screenWidth, livesLeft;
+        int screenHeight, screenWidth, livesLeft, updateCount;
         Player player;
-        Texture2D background, brick, character, life, bugZilla, scene;
+        Texture2D background, brick, character, life, bugZilla, scene, creator, devDialog, playerDialog;
         SoundEffect jump;
         MonsterObject bug, dragon;
         ExitObject exit;
         List<Texture2D> story;
-        bool isStartup;
+        bool isStartup, knowsPowerup = false;
         double initAt;
+        CollectibleObject helmet;
 
         public LevelThree(int livesLeft, GameTime gameTime)
         {
@@ -48,9 +49,14 @@ namespace Leecher
             jump = content.Load<SoundEffect>(@"jump");
             player = new Player(character, 10, 410, jump);
 
-           dragon = new MonsterObject(content.Load<Texture2D>(@"dragon"), screenWidth / 2 - 250, screenHeight - 600, 550, 250, 0);
-           dragon.setFrameSize(539, 389);
-           dragon.setCollisionBox(screenWidth / 2 - 120, screenHeight - 600, 240, 250);
+            devDialog = content.Load<Texture2D>(@"dialog_43");
+            playerDialog = content.Load<Texture2D>(@"dialog_41");
+
+            creator = content.Load<Texture2D>(@"theCreator");
+
+            dragon = new MonsterObject(content.Load<Texture2D>(@"dragon"), screenWidth / 2 - 250, screenHeight - 600, 550, 250, 0);
+            dragon.setFrameSize(539, 389);
+            dragon.setCollisionBox(screenWidth / 2 - 120, screenHeight - 600, 240, 250);
 
             spriteBatch = new SpriteBatch(graphicsDevice);
             brick = content.Load<Texture2D>(@"brick");
@@ -61,6 +67,9 @@ namespace Leecher
 
             exit = new ExitObject(content.Load<Texture2D>(@"exit"), screenWidth - 90, screenHeight - 260, 50, 60);
 
+            helmet = new CollectibleObject(content.Load<Texture2D>(@"helmet"), 250, 300, 70, 70);
+
+            gameObjects.Add(helmet);
             gameObjects.Add(new Ledge(brick, 0, screenWidth, screenHeight - 20));
             gameObjects.Add(new Ledge(brick, 0, screenWidth, screenHeight - 40));
             gameObjects.Add(new Ledge(brick, 0, screenWidth, screenHeight - 60));
@@ -104,6 +113,13 @@ namespace Leecher
             PhysicsEngine.objects = gameObjects;
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 return Tuple.Create(LevelState.Exited, livesLeft);
+
+            if (!knowsPowerup && !gameObjects.Exists(x => x.GetType() == typeof(CollectibleObject)))
+            {
+                knowsPowerup = true;
+                updateCount = 50;
+            }
+
 
             if (!gameObjects.Exists(delegate(GameObject gameObject)
             {
@@ -153,6 +169,15 @@ namespace Leecher
                 bug.Draw(spriteBatch);
                 dragon.Draw(spriteBatch);
 
+                spriteBatch.Draw(creator, new Rectangle(screenWidth / 2 - 50, 5, 100, 100), Color.White);
+
+                if (updateCount > 0)
+                {
+                    updateCount--;
+                    spriteBatch.Draw(playerDialog, new Rectangle(250, 250, 100, 100), Color.White);
+                    spriteBatch.Draw(devDialog, new Rectangle(screenWidth/2 + 50, 30, 100, 100), Color.White);
+                }
+
                 for (int index = 0; index < livesLeft; index++)
                 {
                     spriteBatch.Draw(life, new Rectangle(screenWidth - 40 * (index + 1), 0, 40, 40), Color.White);
@@ -180,6 +205,9 @@ namespace Leecher
             bug = new MonsterObject(bugZilla, screenWidth / 2, screenHeight - 220, 70, 100);
             player = new Player(character, 10, 410, jump);
             gameObjects.Add(exit);
+            gameObjects.Add(helmet);
+            knowsPowerup = false;
+            updateCount = 0;
         }
     }
 }
