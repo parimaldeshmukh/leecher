@@ -13,15 +13,16 @@ namespace Leecher
     class LevelTwo : Level
     {
         List<GameObject> collidableObjects;
-        Texture2D background, character, theCreator, brick, shark, code, ground, ledge_error, portal1, portal2, cursor, life;
+        Texture2D background, playerDialog, devStartDialog, character, theCreator, brick, shark, code, ground, ledge_error, portal1, portal2, cursor, life, devDialog;
         SpriteBatch spriteBatch;
-        int screenHeight, screenWidth, cursorX, cursorY, livesLeft;
+        int screenHeight, screenWidth, cursorX, cursorY, livesLeft,updateCount=0;
         Player player;
-        bool portalsBeingPlaced = false;
+        bool portalsBeingPlaced = false, isStartup= true;
         PortalObject portalOne, portalTwo;
         ExitObject exit;
         GameTime initAt;
         SoundEffect jump, dead;
+        CollectibleObject gun;
 
         public LevelTwo(int livesLeft, GameTime gameTime) {
             collidableObjects = new List<GameObject>();
@@ -53,9 +54,17 @@ namespace Leecher
             cursor = content.Load<Texture2D>(@"Cursor");
             jump = content.Load<SoundEffect>(@"jump");
             dead = content.Load<SoundEffect>(@"dead");
+
+            playerDialog = content.Load<Texture2D>(@"dialog_21");
+            devStartDialog = content.Load<Texture2D>(@"dialog_22");
+
             player = new Player(character, 10, 350, jump);
 
             exit = new ExitObject(content.Load<Texture2D>(@"exit"), screenWidth - 90, 400, 50, 60);
+            devDialog = content.Load<Texture2D>(@"dialog_23");
+            gun = new CollectibleObject(content.Load<Texture2D>(@"portal_gun"), 140, 350, 60, 40);
+            gun.setSound(content.Load<SoundEffect>(@"collect"));
+            collidableObjects.Add(gun);
             collidableObjects.Add(exit);
 
             for(int i = 0; i < 241; i=i+20)           
@@ -71,8 +80,23 @@ namespace Leecher
         {
             PhysicsEngine.objects = collidableObjects;
 
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                return Tuple.Create(LevelState.Exited, livesLeft);;
+                return Tuple.Create(LevelState.Exited, livesLeft); 
+
+            if (isStartup)
+            {
+                if (gameTime.TotalGameTime.TotalSeconds != 0 && gameTime.TotalGameTime.TotalSeconds % 4 == 0)
+                    isStartup = false;
+                return Tuple.Create(LevelState.InProgress, livesLeft);
+            }
+
+            if(!collidableObjects.Exists(x => x.GetType() == typeof(CollectibleObject)))
+            {
+                updateCount = 1;
+            }
+
+            
             if (player.y > screenHeight) {
                 dead.Play();
                 if (livesLeft > 1) init(livesLeft - 1, gameTime);
@@ -144,6 +168,7 @@ namespace Leecher
             collidableObjects.Add(exit);
             player = new Player(character, 10, 350, jump);
             collidableObjects.RemoveAll(x => x.GetType() == typeof(PortalObject));
+            collidableObjects.Add(gun);
         }
 
         public void UnloadContent()
@@ -158,12 +183,21 @@ namespace Leecher
             Rectangle backgroundContainer = new Rectangle(0, 0, screenWidth, screenHeight);
             spriteBatch.Begin();
 
+     
+
             spriteBatch.Draw(background, backgroundContainer, Color.White);
-            spriteBatch.Draw(theCreator, new Rectangle(1050, 30, 120, 120), Color.White);
+
+            if (isStartup)
+            {
+                spriteBatch.Draw(playerDialog, new Rectangle(10, 250, 100, 100), Color.White);
+                spriteBatch.Draw(devStartDialog, new Rectangle(620, 50, 100, 100), Color.White);
+            }
+
+            spriteBatch.Draw(theCreator, new Rectangle(500, 30, 120, 120), Color.White);
             spriteBatch.Draw(shark, new Rectangle(400, 520, 480, 200), Color.White);
             spriteBatch.Draw(code, new Rectangle(0, 0, 400, 200), Color.White);
             if(portalsBeingPlaced) spriteBatch.Draw(cursor, new Rectangle(cursorX, cursorY, 50, 60), Color.White);
-
+            if (updateCount != 0) spriteBatch.Draw(devDialog, new Rectangle(620, 70, 120, 120), Color.White); 
             spriteBatch.Draw(ledge_error, new Rectangle(450, 320, 400, 40), Color.White);
 
             for (int index = 0; index < livesLeft; index++)

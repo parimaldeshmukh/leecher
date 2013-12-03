@@ -13,7 +13,7 @@ namespace Leecher
         Texture2D myDialog, playerDialog, devDialog;
         Texture2D texture;
         int x, y, height, width, updateCount = 0;
-        Rectangle box, collisionBox;
+        Rectangle box, collisionBox, myPosition = Rectangle.Empty, playerPosition = Rectangle.Empty, devPosition = Rectangle.Empty;
 
 
         public Rectangle getCollisionBox()
@@ -41,9 +41,9 @@ namespace Leecher
 
             if (updateCount > 0)
             {
-                spriteBatch.Draw(myDialog, new Rectangle(box.X, box.Y - 120, 120, 120), Color.White);
-                spriteBatch.Draw(playerDialog, new Rectangle(box.X - 120, box.Y - 120, 120, 120), Color.White);
-                spriteBatch.Draw(devDialog, new Rectangle(165, 5, 120, 120), Color.White);
+                spriteBatch.Draw(myDialog, myPosition, Color.White);
+                spriteBatch.Draw(playerDialog, playerPosition, Color.White);
+                spriteBatch.Draw(devDialog, devPosition, Color.White);
                 updateCount--;
             }
         }
@@ -52,6 +52,21 @@ namespace Leecher
         public bool PlayerCollisionEffect(Keys keyPressed, Direction intendedDirection) // return false to allow player to pass through this object, return true for a real collision
         {
             updateCount = 40;
+
+            if (myPosition == Rectangle.Empty)
+            {
+                myPosition = new Rectangle(box.X, box.Y - 120, 120, 120);
+            }
+
+            if (playerPosition == Rectangle.Empty)
+            {
+                playerPosition = new Rectangle(box.X - 120, box.Y - 120, 120, 120);
+            }
+
+            if (devPosition == Rectangle.Empty)
+            {
+                devPosition = new Rectangle(165, 5, 120, 120);
+            }
             return true;
         }
 
@@ -62,7 +77,12 @@ namespace Leecher
             playerDialog = playerInteraction;
         }
 
-
+        public void setPositions(Rectangle myPosition, Rectangle playerPosition, Rectangle devPosition)
+        {
+            this.myPosition = myPosition;
+            this.playerPosition = playerPosition;
+            this.devPosition = devPosition;
+        }
         
     }
 }
