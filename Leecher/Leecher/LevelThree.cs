@@ -54,9 +54,9 @@ namespace Leecher
 
             creator = content.Load<Texture2D>(@"theCreator");
 
-            dragon = new MonsterObject(content.Load<Texture2D>(@"dragon"), screenWidth / 2 - 250, screenHeight - 600, 550, 250, 0);
+            dragon = new MonsterObject(content.Load<Texture2D>(@"dragon"), screenWidth / 2 - 250, screenHeight - 580, 550, 250, 0);
             dragon.setFrameSize(539, 389);
-            dragon.setCollisionBox(screenWidth / 2 - 120, screenHeight - 600, 240, 250);
+            dragon.setCollisionBox(screenWidth / 2 - 120, screenHeight - 580, 240, 250);
 
             spriteBatch = new SpriteBatch(graphicsDevice);
             brick = content.Load<Texture2D>(@"brick");
@@ -84,7 +84,7 @@ namespace Leecher
             gameObjects.Add(new Ledge(brick, screenWidth/2 + 280, screenWidth, screenHeight - 180));
             gameObjects.Add(new Ledge(brick, 0, screenWidth / 2 - 280, screenHeight - 200));
             gameObjects.Add(new Ledge(brick, screenWidth / 2 + 280, screenWidth, screenHeight - 200));
-            gameObjects.Add(new Ledge(brick, screenWidth /2 - 280, screenWidth/2 + 280, screenHeight - 350));
+            gameObjects.Add(new Ledge(brick, screenWidth /2 - 280, screenWidth/2 + 280, screenHeight - 330));
 
             gameObjects.Add(exit);
 
