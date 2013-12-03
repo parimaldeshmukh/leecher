@@ -23,7 +23,7 @@ namespace Leecher
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.graphics.IsFullScreen = true;
-            level = new LevelThree(totalLives, new GameTime());
+            level = new LevelOne(totalLives, new GameTime());
             levels = new List<Level>();
             levels.Add(level);
             levels.Add(new LevelTwo(totalLives, new GameTime()));
