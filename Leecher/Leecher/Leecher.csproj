@@ -110,6 +110,7 @@
     <Compile Include="CollectibleObject.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="ExitObject.cs" />
+    <Compile Include="InteractiveObject.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="LevelOne.cs" />
     <Compile Include="ClimbableObject.cs" />

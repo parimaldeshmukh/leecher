@@ -22,7 +22,7 @@ namespace Leecher
         ExitObject exit;
         List<Texture2D> story;
         bool isStartup;
-        GameTime initAt;
+        double initAt;
 
         public LevelThree(int livesLeft, GameTime gameTime)
         {
@@ -30,7 +30,7 @@ namespace Leecher
             this.livesLeft = livesLeft;
             story = new List<Texture2D>();
             isStartup = true;
-            initAt = gameTime;
+            initAt = gameTime.TotalGameTime.TotalSeconds;
         }
 
         public void Initialise()
@@ -95,7 +95,7 @@ namespace Leecher
 
             if (isStartup)
             {
-                if (Keyboard.GetState().GetPressedKeys().Length != 0)
+                //if (Keyboard.GetState().GetPressedKeys().Length != 0)
                     //isStartup = false;
                 UpdateStory(gameTime);
                 return Tuple.Create(LevelState.InProgress, livesLeft);
@@ -131,10 +131,12 @@ namespace Leecher
 
         private void UpdateStory(GameTime gameTime)
         {
-            if ((gameTime.TotalGameTime.TotalSeconds - initAt.TotalGameTime.TotalSeconds) % 5 == 0)
+            double secondsOne = gameTime.TotalGameTime.TotalSeconds;
+
+            if (secondsOne != initAt && ( secondsOne - initAt) % 3 == 0)
             {
                 if (story.IndexOf(scene) + 1 == story.Count) isStartup = false;
-                else if (gameTime.TotalGameTime.TotalSeconds != 0)
+                else //if (gameTime.TotalGameTime.TotalSeconds != 0)
                     scene = story.ElementAt(story.IndexOf(scene) + 1);
             }
         }
@@ -172,11 +174,12 @@ namespace Leecher
 
         public void init(int livesLeft, GameTime gameTime)
         {
-            initAt = gameTime;
+            initAt = gameTime.TotalGameTime.TotalSeconds;
             this.livesLeft = livesLeft;
             PhysicsEngine.objects = gameObjects;
             bug = new MonsterObject(bugZilla, screenWidth / 2, screenHeight - 220, 70, 100);
             player = new Player(character, 10, 410, jump);
+            gameObjects.Add(exit);
         }
     }
 }

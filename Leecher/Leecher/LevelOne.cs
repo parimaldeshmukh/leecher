@@ -44,8 +44,12 @@ namespace Leecher
             isStartup = true;
             gameobjects.Add(exit);
             player = new Player(character, 10, screenHeight - 130, jump);
-            gameobjects.Add(new CollectibleObject(openComment, 300, 100, 40, 40));
-            gameobjects.Add(new CollectibleObject(closeComment, screenWidth - 300, screenHeight - 100, 40, 40));
+            CollectibleObject temp = new CollectibleObject(openComment, 300, 100, 40, 40);
+            temp.setSound(collect);
+            gameobjects.Add(temp);
+            temp = new CollectibleObject(closeComment, screenWidth - 300, screenHeight - 100, 40, 40);
+            temp.setSound(collect);
+            gameobjects.Add(temp);
         }
 
         public void LoadContent(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, ContentManager content)
@@ -139,7 +143,7 @@ namespace Leecher
 
         private void UpdateStory(GameTime gameTime)
         {
-            if(gameTime.TotalGameTime.TotalSeconds % 5 == 0){
+            if(gameTime.TotalGameTime.TotalSeconds % 3 == 0){
             if (story.IndexOf(scene) + 1 == story.Count) isStartup = false;
             else if(gameTime.TotalGameTime.TotalSeconds != 0)
                 scene = story.ElementAt(story.IndexOf(scene) + 1);
