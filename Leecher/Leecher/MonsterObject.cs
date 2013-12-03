@@ -74,6 +74,8 @@ namespace Leecher
                 x += deltaX;
                 currentFrame.X = deltaX!=0? (currentFrame.X + 1) % 3 : gameTime.TotalGameTime.TotalSeconds % 2 == 0? (currentFrame.X + 1) % 3: currentFrame.X;
             }
+
+           
         }
 
         internal bool isFatal()
