@@ -86,7 +86,7 @@ namespace Leecher
 
             if (isStartup)
             {
-                if (gameTime.TotalGameTime.TotalSeconds != 0 && gameTime.TotalGameTime.TotalSeconds % 4 == 0)
+                if (gameTime.TotalGameTime.TotalSeconds != 0 && gameTime.TotalGameTime.TotalSeconds % 5 == 0)
                     isStartup = false;
                 return Tuple.Create(LevelState.InProgress, livesLeft);
             }
