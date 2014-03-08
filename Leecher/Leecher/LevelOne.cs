@@ -13,7 +13,8 @@ namespace Leecher
     class LevelOne : Level
     {
         List<GameObject> gameobjects;
-        Texture2D background, character, theCreator, openComment, closeComment, brick;
+        Texture2D background, character, theCreator, openComment, closeComment, brick, bugZilla;
+        MonsterObject bug;
         SpriteBatch spriteBatch;
         int screenHeight, screenWidth, livesLeft;
         Player player;
@@ -43,6 +44,7 @@ namespace Leecher
             this.livesLeft = livesLeft;
             isStartup = true;
             gameobjects.Add(exit);
+            bug = new MonsterObject(bugZilla, screenWidth / 2, screenHeight - 120, 70, 100);
             player = new Player(character, 10, screenHeight - 130, jump);
             CollectibleObject temp = new CollectibleObject(openComment, 300, 100, 40, 40);
             temp.setSound(collect);
@@ -65,6 +67,12 @@ namespace Leecher
             openComment = content.Load<Texture2D>(@"open_comment");
             closeComment = content.Load<Texture2D>(@"close_comment");
             brick = content.Load<Texture2D>(@"brick");
+
+            bugZilla = content.Load<Texture2D>(@"bug");
+            bug = new MonsterObject(bugZilla, screenWidth / 2, screenHeight - 120, 70, 100);
+
+            bug.setFrameSize(70, 100);
+            bug.setCollisionBox(screenWidth / 2 , screenHeight - 120, 70, 100);
 
             character = content.Load<Texture2D>("sprite_sheet_without");
 
@@ -141,6 +149,8 @@ namespace Leecher
                     return gameObject.GetType() == typeof(ExitObject);
                 })) return Tuple.Create(LevelState.InProgress, livesLeft);
 
+                bug.Update(gameTime);
+
                 return Tuple.Create(LevelState.Completed, livesLeft);
             }
         }
@@ -170,6 +180,7 @@ namespace Leecher
             {
                 spriteBatch.Draw(background, backgroundContainer, Color.White);
                 spriteBatch.Draw(theCreator, new Rectangle(30, 10, 120, 120), Color.White);
+                bug.Draw(spriteBatch);
 
                 for (int index = 0; index < livesLeft; index++)
                 {
